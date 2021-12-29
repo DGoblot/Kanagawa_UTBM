@@ -36,7 +36,7 @@ public class Joueur
     public boolean tour()
     {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Choix ?\n");
+        System.out.println("Prendre des cartes ?\n");
         return scanner.nextBoolean();
     }
 

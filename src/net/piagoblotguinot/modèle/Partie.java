@@ -11,11 +11,13 @@ public class Partie
     private boolean running;
 
     /* Matériel de jeu */
-    private Carte[][] plateau;
-    private Carte[] pioche;
-    private Carte[] cartes;
-    private int[][] masque;
-    private Filiere[] filieresDisponnibles;
+    protected Carte[][] plateau;
+    protected Carte[] pioche;
+    protected Carte[] cartes;
+    protected int[][] masque;
+    protected int hauteur;
+    protected int indicePioche;
+    protected Filiere[] filieresDisponnibles;
 
     /* Joueurs */
     private Joueur[] joueurs;
@@ -32,6 +34,8 @@ public class Partie
         this.pioche = new Carte[72];
         this.cartes = new Carte[72];
         this.masque = new int[3][4];
+        this.hauteur = 0;
+        this.indicePioche = 0;
         this.filieresDisponnibles = new Filiere[19];
         this.nbJoueurs = nbJoueurs;
         this.joueurs = new Joueur[4];
@@ -64,10 +68,8 @@ public class Partie
 
         melangerPioche();
 
-        for (int i = 0; i < 72; i++) {
-            System.out.println("Nouvelle carte :");
-            pioche[i].aff();
-        }
+
+
 
         //Attribuer aléatoirement les saisons de départ aux joueurs.
         // Attribuer aléatoirement les numéros des joueurs et l'attribut Main::assistant
@@ -109,22 +111,27 @@ public class Partie
 
     public void run()
     {
-        System.out.println("Test");
+
         while(this.running) // Boucle des tours de jeu.
         {
-            this.ajouterLigne();
-            for(int i = this.premierJoueur ; i < this.nbJoueurs+this.premierJoueur ; i++)
-            {
-                if(joueurs[i % this.nbJoueurs].tour())//Le joueur prend des cartes
-                {
-                    System.out.println();
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.println("Quelle colonne ?\n");
-                    joueurs[i].prendreCarte(scanner.nextInt());
+
+
+            while (!tourTermine()) {
+                this.ajouterLigne();
+                affPlateau();
+                for (int i = this.premierJoueur; i < this.nbJoueurs + this.premierJoueur; i++) {
+                    if (joueurs[i % this.nbJoueurs].tour())//Le joueur prend des cartes
+                    {
+                        System.out.println();
+                        Scanner scanner = new Scanner(System.in);
+                        System.out.println("Quelle colonne ?\n");
+                        joueurs[i].prendreCarte(scanner.nextInt());
+                        aPrisCarte[i] = true;
+                    }
+
                 }
-
+                hauteur++;
             }
-
             if(testFinJeu()) {this.running = false;}
         }
 
@@ -135,6 +142,41 @@ public class Partie
 
         // Afficher un écran présentant les résultats finaux.
         //
+    }
+
+    private boolean tourTermine() {
+        boolean fini = true;
+        for (int i = 0; i < nbJoueurs; i++) {
+            if (!aPrisCarte[i])
+            {
+                fini = false;
+            }
+
+        }
+        return fini;
+    }
+
+    private void affPlateau() {
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Ligne ");
+            System.out.println(i+1);
+            System.out.println();
+            for (int j = 0; j < nbJoueurs; j++) {
+                System.out.print("Colonne ");
+                System.out.println(j+1);
+                System.out.println();
+                if (plateau[i][j] == null)
+                {
+                    System.out.println("Vide");
+                } else {
+                    plateau[i][j].aff();
+                }
+                System.out.println();
+
+
+            }
+
+        }
     }
 
     public void melangerPioche()
@@ -159,7 +201,19 @@ public class Partie
 
     public void ajouterLigne()
     {
+        if (hauteur == 0) {
+            for (int i = 0; i < nbJoueurs; i++) {
+                plateau[0][i] = pioche[indicePioche++];
+            }
+        } else {
 
+            for (int i = 0; i < nbJoueurs; i++) {
+                if (plateau[hauteur-1][i] != null)
+                {
+                    plateau[hauteur][i] = pioche[indicePioche++];
+                }
+            }
+        }
     }
 
     public boolean peutPasserSonTour()

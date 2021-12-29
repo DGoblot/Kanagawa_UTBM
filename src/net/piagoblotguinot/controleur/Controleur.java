@@ -20,6 +20,7 @@ public class Controleur
         }
         this.partie = new Partie(4,tableau);
         partie.init();
+        partie.run();
     }
 
     /* GETTERS */
