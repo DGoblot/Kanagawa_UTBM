@@ -13,32 +13,23 @@ public class Carte
 
     protected void aff()
     {
-        System.out.print("Domaine : ");
-        System.out.println(competence.domaine);
+        System.out.println("Domaine : " + competence.domaine);
 
-        System.out.print("Objet : ");
-        System.out.println(competence.objet);
+        System.out.println("Objet : " + competence.objet);
 
-        System.out.print("ECTS : ");
-        System.out.println(competence.ects);
+        System.out.println("ECTS : " + competence.ects);
 
-        System.out.print("Domaine : ");
-        System.out.println(uv.domaine);
+        System.out.println("Domaine : " + uv.domaine);
 
-        System.out.print("Nombre de domaines : ");
-        System.out.println(uv.nombre);
+        System.out.println("Nombre de domaines : " + uv.nombre);
 
-        System.out.print("Année : ");
-        System.out.println(uv.annee);
+        System.out.println("Année : " + uv.annee);
 
-        System.out.print("ECTS : ");
-        System.out.println(uv.ects);
+        System.out.println("ECTS : " + uv.ects);
 
-        System.out.print("Approche : ");
-        System.out.println(uv.approche);
+        System.out.println("Approche : " + uv.approche);
 
-        System.out.print("Type : ");
-        System.out.println(uv.type);
+        System.out.println("Type : " + uv.type);
 
     }
 }

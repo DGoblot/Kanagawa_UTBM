@@ -2,8 +2,10 @@ package net.piagoblotguinot.controleur;
 
 public class Main
 {
+    private static Controleur controleur;
+
     public static void main(String[] args)
     {
-        Controleur controleur = new Controleur();
+        controleur = new Controleur();
     }
 }

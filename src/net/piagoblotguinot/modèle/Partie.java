@@ -1,7 +1,6 @@
 package net.piagoblotguinot.modèle;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -53,7 +52,7 @@ public class Partie
         this.aPrisCarte = new boolean[4];
         for(int i = 0 ; i < this.nbJoueurs ; i++)
         {
-            this.joueurs[i] = new Joueur();
+            this.joueurs[i] = new Joueur(i+1);
             this.aPrisCarte[i] = false;
         }
     }
@@ -116,17 +115,19 @@ public class Partie
         {
 
 
-            while (!tourTermine()) {
+            while (joueursRestants() > 0) {
                 this.ajouterLigne();
                 affPlateau();
                 for (int i = this.premierJoueur; i < this.nbJoueurs + this.premierJoueur; i++) {
-                    if (joueurs[i % this.nbJoueurs].tour())//Le joueur prend des cartes
-                    {
-                        System.out.println();
-                        Scanner scanner = new Scanner(System.in);
-                        System.out.println("Quelle colonne ?\n");
-                        joueurs[i].prendreCarte(scanner.nextInt());
-                        aPrisCarte[i] = true;
+                    if (!aPrisCarte[i]) {
+                        if (joueurs[i % this.nbJoueurs].tour(hauteur, joueursRestants()))//Le joueur prend des cartes
+                        {
+                            System.out.println();
+                            Scanner scanner = new Scanner(System.in);
+                            System.out.println("Quelle colonne ?\n");
+                            joueurs[i].prendreCarte(scanner.nextInt() - 1, plateau, hauteur);
+                            aPrisCarte[i] = true;
+                        }
                     }
 
                 }
@@ -144,16 +145,16 @@ public class Partie
         //
     }
 
-    private boolean tourTermine() {
-        boolean fini = true;
+    private int joueursRestants() {
+        int n = 0;
         for (int i = 0; i < nbJoueurs; i++) {
             if (!aPrisCarte[i])
             {
-                fini = false;
+                n++;
             }
 
         }
-        return fini;
+        return n;
     }
 
     private void affPlateau() {
