@@ -1,0 +1,3 @@
+* Ouverture des fichiers/sons : vérifier la fermeture des fichiers
+
+* Faire quelque chose de beau pour les graphismes, couleurs, polices...

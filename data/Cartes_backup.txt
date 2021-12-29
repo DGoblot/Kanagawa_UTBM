@@ -1,0 +1,117 @@
+
+COMPETENCE : domaine objet ects, UV : domaine nombre_de_domaine année ects approche type
+
+ANIMAUX :
+
+foret 0 0 foret 1 printemps 0 animaux sanglier
+foret 0 0 ocean 2 printemps 1 animaux sanglier
+foret 0 0 plaine 1 printemps 0 animaux sanglier
+0 brosse 0 ocean 1 été 1 animaux sanglier
+0 assistant 1 plaine 1 automne 0 animaux 0
+0 main 2 montagne 1 orage 1 animaux 0
+ocean assistant 0 foret 1 hiver 0 animaux grue
+0 fleche 0 foret 1 printemps 0 animaux cerf
+joker 0 -2 montagne 1 hiver 0 animaux 0
+montagne assistant 0 ocean 1 automne 0 animaux cerf
+0 assistant 1 ocean 1 orage 0 animaux 0
+montagne 0 0 montagne 1 automne 0 animaux cerf
+plaine 0 0 foret 2 été 1 animaux papillon
+ocean 0 0 ocean 1 hiver 0 animaux grue
+ocean 0 0 montagne 2 hiver 1 animaux grue
+montagne 0 0 plaine 2 automne 1 animaux cerf
+plaine 0 0 plaine 1 été 0 animaux papillon
+plaine 0 0 montagne 1 été 0 animaux papillon
+
+PERSONNAGES :²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²
+
+plaine 0 0 foret 2 été 1 personnage guerrier
+plaine 0 0 plaine 1 été 0 personnage guerrier
+plaine assistant 0 montagne 1 été 0 personnage guerrier
+montagne 0 0 montagne 1 automne 0 personnage paysan
+montagne 0 0 plaine 2 automne 1 personnage paysan
+montagne assistant 0 ocean 1 automne 0 personnage paysan
+ocean 0 0 montagne 2 hiver 1 personnage moine
+ocean 0 0 ocean 1 hiver 0 personnage moine
+ocean assistant 0 foret 1 hiver 0 personnage moine
+foret 0 0 foret 1 printemps 0 personnage dame
+foret 0 0 ocean 2 printemps 1 personnage dame
+foret assistant 0 plaine 1 printemps 0 personnage dame
+0 fleche 0 foret 1 automne 0 personnage paysan
+0 brosse 0 ocean 1 été 0 personnage guerrier
+0 assistant 1 plaine 1 printemps 0 personnage moine
+0 assistant 1 plaine 1 orage 1 personnage 0
+0 main 2 foret 1 orage 1 personnage 0
+joker 0 -2 montagne 1 hiver 0 personnage 0
+
+BATIMENTS :
+
+plaine 0 0 plaine 1 été 1 batiments paille
+plaine 0 0 foret 2 été 0 batiments tour
+plaine assistant 0 montagne 1 été 0 batiments paille
+montagne 0 0 plaine 2 automne 0 batiments tuile
+montagne 0 0 montagne 1 automne 1 batiments palais
+montagne assistant 0 ocean 1 automne 0 batiments palais
+ocean 0 0 ocean 1 hiver 1 batiments rond
+ocean 0 0 montagne 2 hiver 0 batiments tuile
+ocean assistant 0 foret 1 hiver 0 batiments rond
+foret 0 0 foret 1 printemps 1 batiments temple
+foret 0 0 ocean 2 printemps 0 batiments tour
+foret assistant 0 plaine 1 printemps 0 batiments temple
+0 fleche 0 foret 1 automne 0 batiments palais
+0 brosse 0 ocean 1 été 0 batiments paille
+0 assistant 1 plaine 1 hiver 0 batiments rond
+0 assistant 1 ocean 1 orage 1 batiments 0
+0 main 2 montagne 1 orage 1 batiments 0
+joker 0 -2 montagne 1 printemps 0 batiments 0
+
+ARBRE :
+
+plaine 0 0 foret 2 été 0 arbre 3
+plaine 0 0 plaine 1 été 1 arbre 1
+plaine assistant 0 montagne 1 été 0 arbre 1
+montagne 0 0 plaine 2 automne 0 arbre 3
+montagne 0 0 montagne 1 automne 1 arbre 1
+montagne 0 0 ocean 1 automne 0 arbre 1
+ocean 0 0 ocean 1 hiver 1 arbre 1
+ocean 0 0 montagne 2 hiver 0 arbre 3
+ocean 0 0 foret 1 hiver 0 arbre 1
+foret 0 0 foret 1 printemps arbre 1
+foret 0 0 ocean 2 printemps 0 arbre 3
+foret assistant 0 plaine 1 printemps 0 arbre 1
+0 fleche 0 foret 1 automne 0 arbre 2
+0 brosse 0 ocean 1 printemps 0 arbre 2
+0 assistant 1 plaine 1 orage 0 arbre 0
+0 assistant 1 plaine 1 hiver 0 arbre 2
+0 main 2 foret 1 orage 1 arbre 0
+joker 0 -2 montagne 1 été 0 arbre 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
