@@ -55,8 +55,8 @@ public class Partie
             this.joueurs[i] = new Joueur(i+1);
 
             //Temporaire
-            this.joueurs[i].anneeInitiale = "hiver";
-            this.joueurs[i].competences.get(0).domaine = "ocean";
+            this.joueurs[i].anneeInitiale = "première";
+            this.joueurs[i].competences.get(0).domaine = "reseau";
             //!Temporaire
 
             this.aPrisCarte[i] = false;
@@ -85,7 +85,7 @@ public class Partie
     private void creerCartes()
     {
         int i = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader("data/Cartes.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data/Cartes_UTGawa.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 this.cartes[i] = lireCarte(line);

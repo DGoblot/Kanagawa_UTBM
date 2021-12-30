@@ -134,7 +134,7 @@ public class Joueur
     }
 
     private boolean placerOrdi(int indice) {
-        if (ordinateurs == 0 || indice > competences.size() || competences.get(indice-1).ordi ||Objects.equals(competences.get(indice - 1).domaine, "0")) {
+        if (ordinateurs == 0 || indice > competences.size() || competences.get(indice-1).ordi || Objects.equals(competences.get(indice - 1).domaine, "aucun")) {
             return false;
         }
 
@@ -171,7 +171,7 @@ public class Joueur
         int domainesRequis = Integer.parseInt(main.get(indice).uv.nombre);
 
         for (Competence competence : competences) {
-            if (competence.actif && Objects.equals(competence.domaine, main.get(indice).uv.domaine) && competence.ordi) {
+            if (competence.actif && (Objects.equals(competence.domaine, main.get(indice).uv.domaine) || Objects.equals(competence.domaine, "algo")) && competence.ordi) {
                 domainesDispo++;
             }
         }
@@ -181,8 +181,19 @@ public class Joueur
         }
 
         for (int i = 0; i < competences.size() && domainesRequis>0; i++) {
-            domainesRequis--;
-            competences.get(i).actif = false;
+            if (Objects.equals(competences.get(i).domaine, main.get(indice).uv.domaine)) {
+                domainesRequis--;
+                competences.get(i).actif = false;
+            }
+
+        }
+
+
+        for (int i = 0; i < competences.size() && domainesRequis>0; i++) {
+            if (Objects.equals(competences.get(i).domaine, "algo")) {
+                domainesRequis--;
+                competences.get(i).actif = false;
+            }
 
         }
 
@@ -263,24 +274,9 @@ public class Joueur
 
     }
 
-    public void poserCompetence()
-    {
-
-    }
-
-    public void poserUV()
-    {
-
-    }
-
     public boolean conditionRemplie()
     {
         return false;
-    }
-
-    public void poserOrdinateur()
-    {
-
     }
 
     public boolean bougerOrdinateur(int depart, int arrivee)
