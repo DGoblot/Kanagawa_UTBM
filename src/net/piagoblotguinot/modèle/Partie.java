@@ -120,7 +120,7 @@ public class Partie
                 affPlateau();
                 for (int i = this.premierJoueur; i < this.nbJoueurs + this.premierJoueur; i++) {
                     if (!aPrisCarte[i]) {
-                        if (joueurs[i % this.nbJoueurs].tour(hauteur, joueursRestants()))//Le joueur prend des cartes
+                        if (joueurs[i % this.nbJoueurs].choixAction(hauteur, joueursRestants()))//Le joueur prend des cartes
                         {
                             System.out.println();
                             Scanner scanner = new Scanner(System.in);

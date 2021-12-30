@@ -10,9 +10,9 @@ public class Joueur
     int numeroAbsolu;
     int numeroCourant;
     ArrayList<Carte> main;
-    Uv[] uvs;
-    Competence[] competences;
-    Filiere[] filieres;
+    ArrayList<Uv> uvs;
+    ArrayList<Competence> competences;
+    ArrayList<Filiere> filieres;
     int[] filieresRefusees;
     int mouvements;
     int ordinateurs;
@@ -24,10 +24,10 @@ public class Joueur
         this.score = 0;
         this.numeroAbsolu = numero;
         //this.numeroCourant = numeroCourant;
-        main = new ArrayList<>();
-        this.uvs = new Uv[32];
-        this.competences = new Competence[32];
-        this.filieres = new Filiere[19];
+        this.main = new ArrayList<>();
+        this.uvs = new ArrayList<>();
+        this.competences = new ArrayList<>();
+        this.filieres = new ArrayList<>();
         this.filieresRefusees = new int[19];
 
         this.mouvements = 1;
@@ -36,7 +36,7 @@ public class Joueur
         //this.paysageInitial = paysageInitial;
     }
 
-    public boolean tour(int hauteur, int joueursRestants)
+    public boolean choixAction(int hauteur, int joueursRestants)
     {
         Scanner scanner = new Scanner(System.in);
 
@@ -58,9 +58,65 @@ public class Joueur
             plateau[i][colonne] = null;
         }
 
-        System.out.println("Cartes prises :");
+        tour();
 
+
+
+    }
+
+    private void tour() {
+
+        System.out.println("Tour du joueur");
+
+        /*Scanner scanner = new Scanner(System.in);
+        affJoueur();
+        System.out.println();*/
+
+
+    }
+
+    private void affJoueur() {
+
+        System.out.println("Liste des UV :");
+        affUv();
+        System.out.println("Liste des compétences :");
+        affCompetences();
+        System.out.println("Main du joueur :");
         affMain();
+
+
+
+
+    }
+
+    private void affCompetences() {
+
+        Iterator<Competence> it = competences.iterator();
+
+        System.out.println();
+
+        while (it.hasNext())
+        {
+            it.next().aff(true);
+            System.out.println();
+        }
+
+        System.out.println();
+    }
+
+    private void affUv() {
+
+        Iterator<Uv> it = uvs.iterator();
+
+        System.out.println();
+
+        while (it.hasNext())
+        {
+            it.next().aff();
+            System.out.println();
+        }
+
+        System.out.println();
 
     }
 

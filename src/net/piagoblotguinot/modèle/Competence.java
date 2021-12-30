@@ -16,4 +16,17 @@ public class Competence
         this.ordi = false;
         this.actif = false;
     }
+
+    public void aff(boolean posee) {
+
+        System.out.println("Domaine : " + domaine);
+        System.out.println("Objet : " + objet);
+        System.out.println("ECTS : " + ects);
+        if (posee)
+        {
+            System.out.println("Ordi présent : " + ordi);
+            System.out.println("Compétence active : " + actif);
+        }
+
+    }
 }
