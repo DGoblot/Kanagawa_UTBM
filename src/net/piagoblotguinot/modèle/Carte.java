@@ -13,6 +13,7 @@ public class Carte
 
     protected void aff()
     {
+        System.out.println();
         System.out.println("Compétence :");
         this.competence.aff(false);
         System.out.println("UV :");

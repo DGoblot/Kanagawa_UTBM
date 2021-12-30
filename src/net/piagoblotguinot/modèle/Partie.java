@@ -55,8 +55,8 @@ public class Partie
             this.joueurs[i] = new Joueur(i+1);
 
             //Temporaire
-            this.joueurs[i].anneeInitiale = "1";
-            this.joueurs[i].paysageInitial = "ocean";
+            this.joueurs[i].anneeInitiale = "hiver";
+            this.joueurs[i].competences.get(0).domaine = "ocean";
             //!Temporaire
 
             this.aPrisCarte[i] = false;
@@ -175,19 +175,19 @@ public class Partie
     }
 
     private void affPlateau() {
-        for (int i = 0; i < 3; i++) {
-            System.out.print("Ligne ");
+        for (int i = 0; i < nbJoueurs; i++) {
+            System.out.print("Colonne ");
             System.out.println(i+1);
             System.out.println();
-            for (int j = 0; j < nbJoueurs; j++) {
-                System.out.print("Colonne ");
+            for (int j = 0; j <= hauteur; j++) {
+                System.out.print("Ligne ");
                 System.out.println(j+1);
                 System.out.println();
-                if (plateau[i][j] == null)
+                if (plateau[j][i] == null)
                 {
                     System.out.println("Vide");
                 } else {
-                    plateau[i][j].aff();
+                    plateau[j][i].aff();
                 }
                 System.out.println();
 

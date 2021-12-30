@@ -14,7 +14,7 @@ public class Competence
         this.objet = "None";
         this.ects = "None";
         this.ordi = false;
-        this.actif = false;
+        this.actif = true;
     }
 
     public void aff(boolean posee) {

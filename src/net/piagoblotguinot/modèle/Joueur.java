@@ -1,7 +1,5 @@
 package net.piagoblotguinot.modèle;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 
 public class Joueur
@@ -19,10 +17,10 @@ public class Joueur
     int ordinateurs;
     boolean assistant;
     String anneeInitiale;
-    String paysageInitial;
 
     public Joueur(int numero)
     {
+
         this.score = 0;
         this.numeroAbsolu = numero;
         this.main = new ArrayList<>();
@@ -33,8 +31,10 @@ public class Joueur
 
         this.mouvements = 1;
         this.ordinateurs = 2;
-        //this.saisonInitiale = saisonInitiale;
-        //this.paysageInitial = paysageInitial;
+        this.mains = 0;
+
+        competences.add(new Competence());
+
     }
 
     public boolean choixAction(int hauteur, int joueursRestants)
@@ -67,25 +67,29 @@ public class Joueur
 
         Scanner scanner = new Scanner(System.in);
         boolean fini = false;
+        int n;
 
         System.out.println("Tour du joueur " + numeroAbsolu);
 
         resetInventaire();
 
-        affJoueur();
-        System.out.println();
 
         while (!fini && main.size() != 0) {
+
+
+            affJoueur();
+            System.out.println();
 
             System.out.println("Choix action :");
             System.out.println("1: Placer UV");
             System.out.println("2: Placer compétence");
             System.out.println("3: Placer ordinateur");
             System.out.println("4: Deplacer ordinateur");
+            System.out.println("5: Finir tour");
             switch (scanner.nextInt()) {
                 case 1:
                     System.out.println("Choix de la carte :");
-                    if (!placerUv(scanner.nextInt())){
+                    if (!placerUv(scanner.nextInt()-1)){
                         System.out.println("Choix invalide");
                     }
                     break;
@@ -102,6 +106,13 @@ public class Joueur
                     }
                     break;
                 case 4:
+                    System.out.println("Choix de la case de depart :");
+                    n = scanner.nextInt();
+                    System.out.println("Choix de la case d'arrivée :");
+                    if(!bougerOrdinateur(n-1,scanner.nextInt()-1))
+                    {
+                        System.out.println("Choix invalide");
+                    }
                     break;
                 case 5:
                     if (main.size() <= mains){
@@ -123,7 +134,14 @@ public class Joueur
     }
 
     private boolean placerOrdi(int indice) {
-        return false;
+        if (ordinateurs == 0 || indice > competences.size() || competences.get(indice-1).ordi ||Objects.equals(competences.get(indice - 1).domaine, "0")) {
+            return false;
+        }
+
+        ordinateurs--;
+        competences.get(indice-1).ordi = true;
+
+        return true;
     }
 
     private boolean placerCompetence(int indice) {
@@ -131,18 +149,52 @@ public class Joueur
             return false;
         }
         competences.add(main.get(indice-1).competence);
+
+
+        switch (main.get(indice - 1).competence.objet) {
+            case "main" -> mains++;
+            case "fleche" -> mouvements++;
+            case "assistant" -> assistant = true;
+            case "ordi" -> ordinateurs++;
+            default -> {
+            }
+        }
+
         main.remove(indice-1);
+
         return true;
 
     }
 
     private boolean placerUv(int indice) {
-        return false;
+        int domainesDispo = 0;
+        int domainesRequis = Integer.parseInt(main.get(indice).uv.nombre);
+
+        for (Competence competence : competences) {
+            if (competence.actif && Objects.equals(competence.domaine, main.get(indice).uv.domaine) && competence.ordi) {
+                domainesDispo++;
+            }
+        }
+
+        if (domainesDispo < domainesRequis) {
+            return false;
+        }
+
+        for (int i = 0; i < competences.size() && domainesRequis>0; i++) {
+            domainesRequis--;
+            competences.get(i).actif = false;
+
+        }
+
+        uvs.add(main.get(indice).uv);
+        main.remove(indice);
+
+        return true;
+
     }
 
     private void resetInventaire() {
         mouvements = compterObjets("fleche") + 1;
-        mains = compterObjets("main");
 
         competences.forEach(competence -> competence.actif = true);
 
@@ -151,12 +203,9 @@ public class Joueur
     private int compterObjets(String objet) {
 
         int n = 0;
-        Iterator<Competence> it = competences.iterator();
 
-        while (it.hasNext())
-        {
-            if(Objects.equals(it.next().objet, objet))
-            {
+        for (Competence competence : competences) {
+            if (Objects.equals(competence.objet, objet)) {
                 n++;
             }
         }
@@ -234,8 +283,17 @@ public class Joueur
 
     }
 
-    public void bougerOrdinateur()
+    public boolean bougerOrdinateur(int depart, int arrivee)
     {
+        if (!competences.get(depart).ordi || competences.get(arrivee).ordi || mouvements == 0)
+        {
+            return false;
+        }
+
+        competences.get(depart).ordi = false;
+        competences.get(arrivee).ordi = true;
+
+        return true;
 
     }
 
