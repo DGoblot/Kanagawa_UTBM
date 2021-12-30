@@ -1,7 +1,7 @@
 package net.piagoblotguinot.modèle;
-import net.piagoblotguinot.controleur.Controleur;
-import net.piagoblotguinot.controleur.Main;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.*;
 
 public class Joueur
@@ -14,16 +14,17 @@ public class Joueur
     ArrayList<Competence> competences;
     ArrayList<Filiere> filieres;
     int[] filieresRefusees;
+    int mains;
     int mouvements;
     int ordinateurs;
-    int saisonInitiale;
-    int paysageInitial;
+    boolean assistant;
+    String anneeInitiale;
+    String paysageInitial;
 
     public Joueur(int numero)
     {
         this.score = 0;
         this.numeroAbsolu = numero;
-        //this.numeroCourant = numeroCourant;
         this.main = new ArrayList<>();
         this.uvs = new ArrayList<>();
         this.competences = new ArrayList<>();
@@ -60,19 +61,107 @@ public class Joueur
 
         tour();
 
-
-
     }
 
     private void tour() {
 
-        System.out.println("Tour du joueur");
+        Scanner scanner = new Scanner(System.in);
+        boolean fini = false;
 
-        /*Scanner scanner = new Scanner(System.in);
+        System.out.println("Tour du joueur " + numeroAbsolu);
+
+        resetInventaire();
+
         affJoueur();
-        System.out.println();*/
+        System.out.println();
+
+        while (!fini && main.size() != 0) {
+
+            System.out.println("Choix action :");
+            System.out.println("1: Placer UV");
+            System.out.println("2: Placer compétence");
+            System.out.println("3: Placer ordinateur");
+            System.out.println("4: Deplacer ordinateur");
+            switch (scanner.nextInt()) {
+                case 1:
+                    System.out.println("Choix de la carte :");
+                    if (!placerUv(scanner.nextInt())){
+                        System.out.println("Choix invalide");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Choix de la carte :");
+                    if (!placerCompetence(scanner.nextInt())){
+                        System.out.println("Choix invalide");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Choix de la carte :");
+                    if (!placerOrdi(scanner.nextInt())){
+                        System.out.println("Choix invalide");
+                    }
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    if (main.size() <= mains){
+                        fini = true;
+                    } else {
+                        System.out.println("Main trop grande");
+                    }
+                    break;
+                default:
+                    System.out.println("Choix invalide");
+            }
+        }
+
+        System.out.println("Fin du tour");
 
 
+
+
+    }
+
+    private boolean placerOrdi(int indice) {
+        return false;
+    }
+
+    private boolean placerCompetence(int indice) {
+        if(indice>main.size()) {
+            return false;
+        }
+        competences.add(main.get(indice-1).competence);
+        main.remove(indice-1);
+        return true;
+
+    }
+
+    private boolean placerUv(int indice) {
+        return false;
+    }
+
+    private void resetInventaire() {
+        mouvements = compterObjets("fleche") + 1;
+        mains = compterObjets("main");
+
+        competences.forEach(competence -> competence.actif = true);
+
+    }
+
+    private int compterObjets(String objet) {
+
+        int n = 0;
+        Iterator<Competence> it = competences.iterator();
+
+        while (it.hasNext())
+        {
+            if(Objects.equals(it.next().objet, objet))
+            {
+                n++;
+            }
+        }
+
+        return n;
     }
 
     private void affJoueur() {
@@ -83,55 +172,44 @@ public class Joueur
         affCompetences();
         System.out.println("Main du joueur :");
         affMain();
+        System.out.println("Inventaire : ");
+        affInventaire();
 
 
 
 
     }
 
+    private void affInventaire() {
+        System.out.println("Ordinateurs restants : " + ordinateurs);
+        System.out.println("Nombre de mains : " + mains);
+        System.out.println("Mouvements restants : " + mouvements);
+        System.out.println("Assistant : " + assistant);
+        System.out.println();
+    }
+
     private void affCompetences() {
 
-        Iterator<Competence> it = competences.iterator();
-
         System.out.println();
-
-        while (it.hasNext())
-        {
-            it.next().aff(true);
-            System.out.println();
-        }
-
+        competences.forEach(comp -> comp.aff(true));
         System.out.println();
     }
 
     private void affUv() {
 
-        Iterator<Uv> it = uvs.iterator();
 
         System.out.println();
-
-        while (it.hasNext())
-        {
-            it.next().aff();
-            System.out.println();
-        }
-
+        System.out.println("Annee initiale : " + anneeInitiale);
+        System.out.println();
+        uvs.forEach(Uv::aff);
         System.out.println();
 
     }
 
     private void affMain() {
 
-        Iterator<Carte> it = main.iterator();
-
         System.out.println();
-
-        while (it.hasNext())
-        {
-            it.next().aff();
-            System.out.println();
-        }
-
+        main.forEach(Carte::aff);
         System.out.println();
 
     }

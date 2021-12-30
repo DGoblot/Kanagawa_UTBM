@@ -53,6 +53,12 @@ public class Partie
         for(int i = 0 ; i < this.nbJoueurs ; i++)
         {
             this.joueurs[i] = new Joueur(i+1);
+
+            //Temporaire
+            this.joueurs[i].anneeInitiale = "1";
+            this.joueurs[i].paysageInitial = "ocean";
+            //!Temporaire
+
             this.aPrisCarte[i] = false;
         }
     }
@@ -113,6 +119,9 @@ public class Partie
 
         while(this.running) // Boucle des tours de jeu.
         {
+            resetTour();
+
+            System.out.println("Debut du tour");
 
 
             while (joueursRestants() > 0) {
@@ -143,6 +152,14 @@ public class Partie
 
         // Afficher un écran présentant les résultats finaux.
         //
+    }
+
+    private void resetTour() {
+        hauteur = 0;
+        for (int i = 0; i < nbJoueurs; i++) {
+            aPrisCarte[i] = false;
+
+        }
     }
 
     private int joueursRestants() {
