@@ -134,12 +134,12 @@ public class Joueur
     }
 
     private boolean placerOrdi(int indice) {
-        if (ordinateurs == 0 || indice > competences.size() || competences.get(indice-1).ordi || Objects.equals(competences.get(indice - 1).domaine, "aucun")) {
+        if (ordinateurs == 0 || indice > competences.size() || competences.get(indice-1).ordi != null || Objects.equals(competences.get(indice - 1).domaine, "aucun")) {
             return false;
         }
 
         ordinateurs--;
-        competences.get(indice-1).ordi = true;
+        competences.get(indice-1).ordi = new Ordinateur();
 
         return true;
     }
@@ -171,7 +171,7 @@ public class Joueur
         int domainesRequis = Integer.parseInt(main.get(indice).uv.nombre);
 
         for (Competence competence : competences) {
-            if (competence.actif && (Objects.equals(competence.domaine, main.get(indice).uv.domaine) || Objects.equals(competence.domaine, "algo")) && competence.ordi) {
+            if (competence.ordi.actif && (Objects.equals(competence.domaine, main.get(indice).uv.domaine) || Objects.equals(competence.domaine, "algo")) && competence.ordi != null) {
                 domainesDispo++;
             }
         }
@@ -181,18 +181,18 @@ public class Joueur
         }
 
         for (int i = 0; i < competences.size() && domainesRequis>0; i++) {
-            if (Objects.equals(competences.get(i).domaine, main.get(indice).uv.domaine)) {
+            if (Objects.equals(competences.get(i).domaine, main.get(indice).uv.domaine) && competences.get(i).ordi != null && competences.get(i).ordi.actif) {
                 domainesRequis--;
-                competences.get(i).actif = false;
+                competences.get(i).ordi.use();
             }
 
         }
 
 
         for (int i = 0; i < competences.size() && domainesRequis>0; i++) {
-            if (Objects.equals(competences.get(i).domaine, "algo")) {
+            if (Objects.equals(competences.get(i).domaine, "algo") && competences.get(i).ordi != null && competences.get(i).ordi.actif) {
                 domainesRequis--;
-                competences.get(i).actif = false;
+                competences.get(i).ordi.actif = false;
             }
 
         }
@@ -207,7 +207,11 @@ public class Joueur
     private void resetInventaire() {
         mouvements = compterObjets("fleche") + 1;
 
-        competences.forEach(competence -> competence.actif = true);
+        for (Competence competence : competences) {
+            if (competence.ordi != null) {
+                competence.ordi.reset();
+            }
+        }
 
     }
 
@@ -281,13 +285,13 @@ public class Joueur
 
     public boolean bougerOrdinateur(int depart, int arrivee)
     {
-        if (!competences.get(depart).ordi || competences.get(arrivee).ordi || mouvements == 0)
+        if (competences.get(depart).ordi == null || competences.get(arrivee).ordi != null || mouvements == 0)
         {
             return false;
         }
 
-        competences.get(depart).ordi = false;
-        competences.get(arrivee).ordi = true;
+        competences.get(arrivee).ordi = competences.get(depart).ordi;
+        competences.get(depart).ordi = null;
 
         return true;
 

@@ -5,16 +5,14 @@ public class Competence
     String domaine;
     String objet;
     String ects;
-    boolean ordi;
-    boolean actif;
+    Ordinateur ordi;
 
     public Competence()
     {
         this.domaine = "None";
         this.objet = "None";
         this.ects = "None";
-        this.ordi = false;
-        this.actif = true;
+        this.ordi = null;
     }
 
     public void aff(boolean posee) {
@@ -24,9 +22,14 @@ public class Competence
         System.out.println("ECTS : " + ects);
         if (posee)
         {
-            System.out.println("Ordi présent : " + ordi);
-            System.out.println("Compétence active : " + actif);
+            System.out.print("Ordi présent : ");
+            if(ordi == null){
+                System.out.println("non");
+            } else {
+                System.out.println("oui");
+                System.out.println("Ordi actif : "+ordi.actif);
+            }
         }
-
+        System.out.println();
     }
 }
