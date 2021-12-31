@@ -12,7 +12,7 @@ public class Competence
         this.domaine = "None";
         this.objet = "None";
         this.ects = "None";
-        this.ordi = null;
+        this.ordi = new Ordinateur();
     }
 
     public void aff(boolean posee) {
@@ -23,7 +23,7 @@ public class Competence
         if (posee)
         {
             System.out.print("Ordi présent : ");
-            if(ordi == null){
+            if(!ordi.exists){
                 System.out.println("non");
             } else {
                 System.out.println("oui");
