@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Joueur
 {
-    double score;
+    int score;
     int numeroAbsolu;
     int numeroCourant;
     ArrayList<Carte> main;
@@ -14,8 +14,10 @@ public class Joueur
     int[] filieresRefusees;
     int mains;
     int mouvements;
+    int stages;
     int ordinateurs;
     boolean assistant;
+    boolean grandmaitre;
     String anneeInitiale;
 
     public Joueur(int numero)
@@ -30,20 +32,24 @@ public class Joueur
         this.filieresRefusees = new int[19];
 
         this.mouvements = 1;
+        this.stages = 0;
         this.ordinateurs = 2;
         this.mains = 0;
+
+        assistant = false;
+        grandmaitre = false;
 
         competences.add(new Competence());
 
     }
 
-    public boolean choixAction(int hauteur, int joueursRestants)
+    public boolean choixAction(int hauteur, int joueursRestants, int indicePioche)
     {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Tour du joueur " + numeroAbsolu);
 
-        if (hauteur < 2 && joueursRestants > 1) {
+        if (hauteur < 2 && joueursRestants > 1 && indicePioche < 72) {
             System.out.println("Prendre des cartes ?\n");
             return scanner.nextBoolean();
         } else {
@@ -52,18 +58,21 @@ public class Joueur
         }
     }
 
-    public void prendreCarte(int colonne, Carte[][] plateau, int hauteur)
+    public void prendreCarte(int colonne, Partie partie)
     {
-        for (int i = 0; i <= hauteur; i++) {
-            main.add(plateau[i][colonne]);
-            plateau[i][colonne] = null;
+        for (int i = 0; i <= partie.hauteur; i++) {
+            if (partie.plateau[i][colonne] == null)
+                continue;
+
+            main.add(partie.plateau[i][colonne]);
+            partie.plateau[i][colonne] = null;
         }
 
-        tour();
+        tour(partie);
 
     }
 
-    private void tour() {
+    private void tour(Partie partie) {
 
         Scanner scanner = new Scanner(System.in);
         boolean fini = false;
@@ -89,13 +98,13 @@ public class Joueur
             switch (scanner.nextInt()) {
                 case 1:
                     System.out.println("Choix de la carte :");
-                    if (!placerUv(scanner.nextInt()-1)){
+                    if (!placerUv(scanner.nextInt()-1,partie)){
                         System.out.println("Choix invalide");
                     }
                     break;
                 case 2:
                     System.out.println("Choix de la carte :");
-                    if (!placerCompetence(scanner.nextInt())){
+                    if (!placerCompetence(scanner.nextInt(),partie)){
                         System.out.println("Choix invalide");
                     }
                     break;
@@ -144,7 +153,7 @@ public class Joueur
         return true;
     }
 
-    private boolean placerCompetence(int indice) {
+    private boolean placerCompetence(int indice, Partie partie) {
         if(indice>main.size()) {
             return false;
         }
@@ -154,21 +163,27 @@ public class Joueur
         switch (main.get(indice - 1).competence.objet) {
             case "main" -> mains++;
             case "fleche" -> mouvements++;
-            case "assistant" -> assistant = true;
+            case "proftp" -> {
+                assistant = true;
+                partie.donnerAssistant(numeroAbsolu - 1);
+            }
             case "ordi" -> ordinateurs++;
             default -> {
             }
         }
 
+
         main.remove(indice-1);
+        
+        testFiliere(partie);
 
         return true;
 
     }
 
-    private boolean placerUv(int indice) {
+    private boolean placerUv(int indice, Partie partie) {
         int domainesDispo = 0;
-        int domainesRequis = Integer.parseInt(main.get(indice).uv.nombre);
+        int domainesRequis = main.get(indice).uv.nombre;
 
         for (Competence competence : competences) {
             if (competence.ordi.actif && (Objects.equals(competence.domaine, main.get(indice).uv.domaine) || Objects.equals(competence.domaine, "algo")) && competence.ordi.exists) {
@@ -199,9 +214,49 @@ public class Joueur
 
         uvs.add(main.get(indice).uv);
         main.remove(indice);
+        
+        testFiliere(partie);
 
         return true;
 
+    }
+
+    private void testFiliere(Partie partie) {
+
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Filiere> prises = new ArrayList<>();
+        boolean filierePrise = false;
+        for (Filiere filiere : partie.filieres) {
+            if (filiere.disponible(this)){
+                System.out.println("Filière disponible :");
+                filiere.aff();
+                System.out.print("Prendre ? ");
+                if (scanner.nextBoolean()){
+                    prendreFiliere(filiere);
+                    prises.add(filiere);
+                    filierePrise = true;
+                } else {
+                    filiere.skip[numeroAbsolu-1] = true;
+                }
+
+            }
+
+        }
+        for (Filiere filiere : prises) {
+            partie.filieres.remove(filiere);
+        }
+        if (filierePrise)
+            testFiliere(partie);
+    }
+
+    private void prendreFiliere(Filiere filiere) {
+        filieres.add(filiere);
+        switch (filiere.objet){
+            case "ordi" -> ordinateurs++;
+            case "proftp" -> assistant = true;
+        }
+        if (filiere.stage)
+            stages++;
     }
 
     private void resetInventaire() {
@@ -230,6 +285,8 @@ public class Joueur
 
     private void affJoueur() {
 
+        System.out.println("Liste des filières :");
+        affFilieres();
         System.out.println("Liste des UV :");
         affUv();
         System.out.println("Liste des compétences :");
@@ -244,11 +301,17 @@ public class Joueur
 
     }
 
+    private void affFilieres() {
+        System.out.println();
+        filieres.forEach(Filiere::aff);
+        System.out.println();
+    }
+
     private void affInventaire() {
         System.out.println("Ordinateurs restants : " + ordinateurs);
         System.out.println("Nombre de mains : " + mains);
         System.out.println("Mouvements restants : " + mouvements);
-        System.out.println("Assistant : " + assistant);
+        System.out.println("Prof TP : " + assistant);
         System.out.println();
     }
 
@@ -310,4 +373,95 @@ public class Joueur
     {
 
     }
+
+    public int score(){
+
+        int total = 0;
+        for (Uv uv : uvs) {
+            total += uv.ects;
+        }
+
+        System.out.println("Total credits UV : " + total);
+
+        score += total;
+        total = 0;
+
+
+        total += uvs.size() + 1; //+1 pour la tuile de base
+
+        for (Competence competence : competences) {
+            total += competence.ects;
+        }
+
+
+        System.out.println("Total credits compétences : " + total);
+
+        score += total;
+        total = 0;
+
+
+        for (Filiere filiere : filieres) {
+            total += filiere.ects;
+        }
+
+
+
+        System.out.println("Total credits filières : " + total);
+
+        score += total;
+        total = 0;
+
+
+        if (grandmaitre)
+            total += 2;
+
+
+        System.out.println("Credits grand maitre : " + total);
+
+        score += total;
+        total = 0;
+
+
+        total += suiteAnnees();
+
+
+
+        System.out.println("Plus grande suite d'années : " + total);
+
+        score += total;
+
+
+        return score;
+        }
+
+    private int suiteAnnees() {
+
+        int[] taille = new int[4];
+        String[] annees = {"première", "deuxième", "troisième", "quatrième"};
+        for (int i = 0; i < annees.length; i++) {
+            if (Objects.equals(anneeInitiale, annees[i]))
+                taille[i] = 1;
+            for (Uv uv : uvs) {
+                if (Objects.equals(uv.annee, annees[i]) || Objects.equals(uv.annee, "stage"))
+                    taille[i]++;
+                else
+                    taille[i] = 0;
+
+            }
+
+            
+        }
+        return max(taille);
+    }
+
+    private int max(int[] taille) {
+        int max = 0;
+        for (int j : taille) {
+            if (max < j)
+                max = j;
+
+        }
+        return max;
+    }
+
 }

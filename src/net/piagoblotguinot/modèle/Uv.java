@@ -4,8 +4,8 @@ public class Uv
 {
     String annee;
     String domaine;
-    String nombre;
-    String ects;
+    int nombre;
+    int ects;
     String approche;
     String type;
 
@@ -13,8 +13,8 @@ public class Uv
     {
         this.annee = "None";
         this.domaine = "None";
-        this.nombre = "None";
-        this.ects = "None";
+        this.nombre = 0;
+        this.ects = 0;
         this.approche = "None";
         this.type = "None";
     }

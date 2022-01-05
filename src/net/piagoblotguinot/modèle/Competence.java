@@ -4,14 +4,14 @@ public class Competence
 {
     String domaine;
     String objet;
-    String ects;
+    int ects;
     Ordinateur ordi;
 
     public Competence()
     {
         this.domaine = "None";
         this.objet = "None";
-        this.ects = "None";
+        this.ects = 0;
         this.ordi = new Ordinateur();
     }
 

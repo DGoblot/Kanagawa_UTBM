@@ -1,19 +1,19 @@
-identique recherche 3 non aucun 3
-identique recherche 4 oui aucun 4
-identique recherche 7 non proftp 5
-différent humanités 3 non aucun 2
-différent humanités 4 oui aucun 3
-différent humanités 7 non proftp 4
-différent humanités 3 non aucun 2
-différent humanités 4 oui aucun 3
-identique humanités 9 non aucun 3
-enumération codage 3 non ordi 2 java rust
-enumération codage 4 non ordi 2 cpp python
-enumération codage 7 non proftp 3 java rust python
-identique ordinateur 1 non proftp 3
-identique ordinateur 3 non aucun 4
-identique fleche 1 non proftp 2
-identique fleche 3 non aucun 3
-identique approche 2 non aucun 2
-identique approche 3 non ordi 3
-identique approche 5 non proftp 4
+identique recherche 3 false aucun 3
+identique recherche 4 true aucun 4
+identique recherche 7 false proftp 5
+différent humanités 3 false aucun 2
+différent humanités 4 true aucun 3
+différent humanités 7 false proftp 4
+différent modélisation 3 false aucun 2
+différent modélisation 4 true aucun 3
+identique modélisation 9 false aucun 3
+enumération codage 3 false ordi 2 java rust
+enumération codage 4 false ordi 2 cpp python
+enumération codage 7 false proftp 3 java rust python
+identique ordinateur 1 false proftp 3
+identique ordinateur 3 false aucun 4
+identique fleche 1 false proftp 2
+identique fleche 3 false aucun 3
+identique approche 2 false aucun 2
+identique approche 3 false ordi 3
+identique approche 5 false proftp 4
