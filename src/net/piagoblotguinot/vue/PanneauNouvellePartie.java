@@ -60,7 +60,7 @@ public class PanneauNouvellePartie extends JPanel
 
     private void initialiser()
     {
-        this.setBackground(new Color(2, 2, 12));
+        this.setBackground(new Color(45, 45, 45));
         this.setLayout(null);
 
         this.add(labelTitre);

@@ -75,7 +75,7 @@ public class Ecran extends JFrame
             case NOUVELLE_PARTIE -> {this.setContentPane(this.panneauNouvellePartie); this.revalidate(); this.repaint();break;}
             case PARTIE_EN_COURS ->
                     {
-                        this.setSize(1550,850);
+                        this.setSize(1910,1070);
                         this.setContentPane(this.panneauJeu);
                         this.setLocationRelativeTo(null);
                         this.revalidate();

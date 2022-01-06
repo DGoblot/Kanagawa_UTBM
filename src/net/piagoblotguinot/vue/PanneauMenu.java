@@ -30,7 +30,7 @@ public class PanneauMenu extends JPanel
 
     private void initialiser()
     {
-        this.setBackground(new Color(2, 2, 12));
+        this.setBackground(new Color(45, 45, 45));
         this.setLayout(null);
         this.add(this.titreJeu);
         this.add(this.boutonNouvellePartie);
@@ -45,6 +45,7 @@ public class PanneauMenu extends JPanel
         label.setFont(new Font("Source Code Pro", Font.BOLD, 48));
         label.setSize(new Dimension(300,300));
         label.setLocation(100,40);
+        label.setForeground(Color.white);
         return label;
     }
 
