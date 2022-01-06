@@ -33,9 +33,10 @@ public class Ecran extends JFrame
     private void initialiser()
     {
         this.setTitle("UTGawa");
-        this.setSize(780,500);
+        //this.setSize(780,500);
+        this.setSize(1910,1070);
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
         try
@@ -47,7 +48,7 @@ public class Ecran extends JFrame
             System.out.println("Problème avec le LookAndFeel");
             e.printStackTrace();
         };
-
+        /*
         this.addWindowListener(new WindowAdapter()
         {
             @Override
@@ -59,9 +60,9 @@ public class Ecran extends JFrame
                         System.exit(0);
                     }
             }
-        });
+        });*/
 
-        this.setContentPane(this.panneauMenu);
+        this.setContentPane(this.panneauJeu);
         this.setVisible(true);
     }
 

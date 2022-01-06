@@ -65,19 +65,19 @@ public class Partie
         joueurs[0].grandmaitre = true;
     }
 
-    public void init()
+    public void init() // OK
     {
         //remplir la pioche :
         // pour chaque case de pioche[i], lire dans le fichier la ligne[i]
         // afin de récuperer les données et les copier dans les attributs des classes, Carte, Uv et Compétence
 
-        creerCartes();
+        creerCartes(); // OK
 
-        melangerPioche();
+        melangerPioche(); // OK
 
-        creerFilieres();
+        creerFilieres(); // OK
 
-        affFilieres();
+        affFilieres(); // OK
 
 
 
@@ -88,13 +88,13 @@ public class Partie
         //Affiche le plateau et la coniguration initiale du jeu
     }
 
-    private void affFilieres() {
+    private void affFilieres() { // OK
         for (Filiere filiere : filieres) {
             filiere.aff();
         }
     }
 
-    private void creerCartes()
+    private void creerCartes() // OK
     {
         int i = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("data/Cartes_UTGawa.txt"))) {
@@ -108,7 +108,7 @@ public class Partie
         }
     }
 
-    private void creerFilieres()
+    private void creerFilieres() // OK
     {
         int i = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("data/Filieres_UTGawa.txt"))) {
@@ -122,7 +122,7 @@ public class Partie
         }
     }
 
-    private Carte lireCarte(String line) {
+    private Carte lireCarte(String line) { // OK
         Carte retour = new Carte();
         String[] arr = line.split("\\s+");
 
@@ -140,7 +140,7 @@ public class Partie
         return retour;
     }
 
-    private Filiere lireFiliere(String line) {
+    private Filiere lireFiliere(String line) { // OK
         String[] arr = line.split("\\s+");
         String[] elements = new String[Integer.parseInt(arr[5])];
         Filiere retour = null;
@@ -263,8 +263,12 @@ public class Partie
         }
     }
 
-    public void melangerPioche()
+    public void melangerPioche() // A refaire en plus simple
     {
+        /*
+        ArrayList<Carte> laPioche = new ArrayList<>();
+        Collections.shuffle(laPioche); */
+
         int position;
         Random random = new Random();
         for (int i = 0; i < 72; i++) {

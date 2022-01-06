@@ -14,7 +14,7 @@ public class PanneauJoueur extends JPanel
     private Controleur controleur;
     private Point emplacement;
     private JPanel uvs, competences, informations;
-    private final int LARGEUR = 480, HAUTEUR = 400; // Dimensions du panneau joueur
+    private final int LARGEUR = 570, HAUTEUR = 515; // Dimensions du panneau joueur
 
     public PanneauJoueur(Controleur controleur, Point emplacement)
     {
@@ -37,20 +37,22 @@ public class PanneauJoueur extends JPanel
     }
 
 
-    private JPanel creerUvs()
+    private JPanel creerUvs() // DIMENSIONS : this.LARGEUR, 332
     {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        panel.setBounds(this.getX(),this.getY(),this.LARGEUR,263);
-        panel.setBackground(new Color(210, 148, 1));
-        for(int i = 1; i <13;i++)
+        panel.setBounds(this.getX(),this.getY(),this.LARGEUR,332);
+        panel.setBackground(new Color(45, 45, 45));
+        for(int i = 1; i <16;i++)
         {
             try
             {
-                BufferedImage original = ImageIO.read(new File("data/Carte_"+ i +".png"));
-                Image image = original.getScaledInstance(114/*(1024/9)*/,82/*(734/9)*/,Image.SCALE_DEFAULT);
+                BufferedImage original = ImageIO.read(new File("data/cartes/Carte_"+ i +".png"));
+                Image image = original.getScaledInstance((1024/7),(734/7),Image.SCALE_SMOOTH);
+                                                            // 146*105
+                BufferedImage recadrage = Utilitaires.toBufferedImage(image).getSubimage(39, 0, 106,104);
 
-                ImageIcon icone = new ImageIcon(image);
+                ImageIcon icone = new ImageIcon(recadrage);
                 JLabel label = new JLabel(icone);
                 panel.add(label);
             } catch(Exception e){e.printStackTrace();}
@@ -62,15 +64,16 @@ public class PanneauJoueur extends JPanel
     {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        panel.setBounds(this.getX(), this.getY()+this.uvs.getHeight(), this.LARGEUR, 90);
-        panel.setBackground(new Color(110, 3, 3));
+        panel.setBounds(this.getX(), this.getY()+this.uvs.getHeight(), this.LARGEUR, 115);
+        panel.setBackground(new Color(82, 81, 81));
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 12; i++) {
             try {
-                BufferedImage original = ImageIO.read(new File("data/Carte_" + i + ".png"));
-                Image image = original.getScaledInstance(114/*(1024/9)*/, 82/*(734/9)*/, Image.SCALE_DEFAULT);
+                BufferedImage original = ImageIO.read(new File("data/cartes/Carte_" + i + ".png"));
+                Image image = original.getScaledInstance((1024/7),(734/7),Image.SCALE_SMOOTH);
+                                                            // 146*105
 
-                BufferedImage recadrage = Utilitaires.toBufferedImage(image).getSubimage(0, 0, 31, 82);
+                BufferedImage recadrage = Utilitaires.toBufferedImage(image).getSubimage(0, 0, 39, 104);
 
                 ImageIcon icone = new ImageIcon(recadrage);
                 JLabel label = new JLabel(icone);
@@ -88,9 +91,11 @@ public class PanneauJoueur extends JPanel
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         panel.setBounds(this.getX(), this.getY()+this.uvs.getHeight()+this.competences.getHeight(), this.LARGEUR,this.HAUTEUR-this.uvs.getHeight()-this.competences.getHeight());
-        panel.setBackground(new Color(6, 134, 0));
+        panel.setBackground(new Color(23, 23, 23));
         JLabel numeroJoueur = new JLabel("Joueur 1");
+        numeroJoueur.setForeground(Color.white);
         JLabel nomJoueur = new JLabel("Ugo");
+        nomJoueur.setForeground(Color.white);
         panel.add(numeroJoueur);
         panel.add(nomJoueur);
 
