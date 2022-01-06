@@ -14,7 +14,7 @@ public class PanneauJeu extends JPanel
     private static final Point POS_JOUEUR2 = new Point(1326,0); // HAUT DROIT
     private static final Point POS_JOUEUR3 = new Point(0,515);    // BAS GAUCHE
     private static final Point POS_JOUEUR4 = new Point(1326,515);    // BAS DROIT
-    private static final Point POS_PLATEAU = new Point(0,0);
+    private static final Point POS_PLATEAU = new Point(571+69,320);
     private static final Point POS_DIPLOME = new Point(571,0);
     private static final Point POS_ACTION = new Point(0,0);
 
@@ -40,7 +40,7 @@ public class PanneauJeu extends JPanel
         this.panneauJoueurs[3] = new PanneauJoueur(this.controleur, POS_JOUEUR4);
         //this.panneauAction = new PanneauAction(this.controleur,POS_ACTION);
         this.panneauDiplomes = new PanneauDiplomes(this.controleur,POS_DIPLOME);
-
+        this.panneauUvs = new PanneauUvs(this.controleur,POS_PLATEAU);
 
         //this.panneauUvs = new PanneauUvs(this.controleur,POS_PLATEAU);
 
@@ -57,7 +57,7 @@ public class PanneauJeu extends JPanel
         this.add(panneauJoueurs[2]);
         this.add(panneauJoueurs[3]);
         this.add(panneauDiplomes);
-        //this.add(panneauUvs);
+        this.add(panneauUvs);
     }
 }
 

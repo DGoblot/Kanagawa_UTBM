@@ -92,7 +92,15 @@ public class Evenements
 
     /* ETAT : PARTIE_EN_COURS */
 
-    public void passer(){}
+
+
+    public void passer()
+    {
+
+
+
+    }
+
     public void prendre(){}
     public void poserCompetence(){}
     public void poserUniteDeValeur(){}
@@ -102,6 +110,10 @@ public class Evenements
     public void prendre3(){}
     public void prendre4(){}
     public void diplomeDeclenche(){}
+
+
+
+
 
     /* ETAT : FIN_JEU */
 

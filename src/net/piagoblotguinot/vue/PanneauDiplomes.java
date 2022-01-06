@@ -23,8 +23,8 @@ public class PanneauDiplomes extends JPanel
     private void initialiser()
     {
         this.setLayout(new FlowLayout());
-        this.setBounds(emplacement.x,emplacement.y,754,400);
-        this.setBackground(new Color(51, 48, 48));
+        this.setBounds(emplacement.x,emplacement.y,754,320);
+        this.setBackground(new Color(45, 45, 45));
 
         for(int i = 1; i <20;i++)
         {
