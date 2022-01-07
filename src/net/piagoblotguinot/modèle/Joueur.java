@@ -1,5 +1,8 @@
 package net.piagoblotguinot.modèle;
 
+import net.piagoblotguinot.controleur.Controleur;
+import net.piagoblotguinot.controleur.Main;
+
 import java.util.*;
 
 public class Joueur
@@ -45,13 +48,15 @@ public class Joueur
 
     public boolean choixAction(int hauteur, int joueursRestants, int indicePioche)
     {
+
+
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Tour du joueur " + numeroAbsolu);
+        //System.out.println("Tour du joueur " + numeroAbsolu);
 
         if (hauteur < 2 && joueursRestants > 1 && indicePioche < 72) {
             System.out.println("Prendre des cartes ?\n");
-            return scanner.nextBoolean();
+            return Main.controleur.getEvenements().getChoixJoueur();
         } else {
             System.out.println("Prise de carte obligatoire");
             return true;
@@ -67,7 +72,7 @@ public class Joueur
             main.add(partie.plateau[i][colonne]);
             partie.plateau[i][colonne] = null;
         }
-
+        Main.controleur.updatePlateau(partie.plateau);
         tour(partie);
 
     }
@@ -83,59 +88,62 @@ public class Joueur
         resetInventaire();
 
 
-        while (!fini && main.size() != 0) {
+        while (!fini && main.size() != 0)
+        {
+            Main.controleur.afficherPanneauAction(); // Nom temporaire
 
-
-            affJoueur();
-            System.out.println();
-
+            //affJoueur();
+            //System.out.println();
+            /*
             System.out.println("Choix action :");
             System.out.println("1: Placer UV");
             System.out.println("2: Placer compétence");
             System.out.println("3: Placer ordinateur");
             System.out.println("4: Deplacer ordinateur");
-            System.out.println("5: Finir tour");
-            switch (scanner.nextInt()) {
-                case 1:
-                    System.out.println("Choix de la carte :");
-                    if (!placerUv(scanner.nextInt()-1,partie)){
+            System.out.println("5: Finir tour");*/
+            //switch (scanner.nextInt()) {
+            switch (Main.controleur.getEvenements().getChoixAction())
+            {
+                case 1: /* Placer comme uV */
+                    //System.out.println("Choix de la carte :");
+                    if (!placerUv(Main.controleur.getEvenements().getChoixCarte(this.main.size()),partie)){
                         System.out.println("Choix invalide");
                     }
                     break;
-                case 2:
-                    System.out.println("Choix de la carte :");
-                    if (!placerCompetence(scanner.nextInt(),partie)){
+                case 2: /* Placer comme compétence */
+                    //System.out.println("Choix de la carte :");
+                    if (!placerCompetence(Main.controleur.getEvenements().getChoixCarte(this.main.size()),partie)){
                         System.out.println("Choix invalide");
                     }
                     break;
-                case 3:
+                case 3: /* Poser ordi */
                     System.out.println("Choix de la carte :");
-                    if (!placerOrdi(scanner.nextInt())){
+                    if (!placerOrdi(Main.controleur.getEvenements().getChoixCarte(this.competences.size()))){
                         System.out.println("Choix invalide");
                     }
                     break;
-                case 4:
+                case 4: /* Bouger ordi */
                     System.out.println("Choix de la case de depart :");
-                    n = scanner.nextInt();
+                    n = Main.controleur.getEvenements().getChoixCarte(this.competences.size());
                     System.out.println("Choix de la case d'arrivée :");
-                    if(!bougerOrdinateur(n-1,scanner.nextInt()-1))
+                    if(!bougerOrdinateur(n-1,Main.controleur.getEvenements().getChoixCarte(this.competences.size())-1))
                     {
                         System.out.println("Choix invalide");
                     }
                     break;
-                case 5:
+                case 5: /* Fin tour */
                     if (main.size() <= mains){
                         fini = true;
                     } else {
-                        System.out.println("Main trop grande");
+                        //System.out.println("Main trop grande");
                     }
                     break;
                 default:
-                    System.out.println("Choix invalide");
+                    //System.out.println("Choix invalide");
             }
         }
 
-        System.out.println("Fin du tour");
+        //System.out.println("Fin du tour");
 
 
 
@@ -221,7 +229,8 @@ public class Joueur
 
     }
 
-    private void testFiliere(Partie partie) {
+    private void testFiliere(Partie partie)
+    {
 
         Scanner scanner = new Scanner(System.in);
         ArrayList<Filiere> prises = new ArrayList<>();
@@ -230,8 +239,9 @@ public class Joueur
             if (filiere.disponible(this)){
                 System.out.println("Filière disponible :");
                 filiere.aff();
+
                 System.out.print("Prendre ? ");
-                if (scanner.nextBoolean()){
+                if (Main.controleur.getEvenements().getChoixFiliere(filiere)){
                     prendreFiliere(filiere);
                     prises.add(filiere);
                     filierePrise = true;

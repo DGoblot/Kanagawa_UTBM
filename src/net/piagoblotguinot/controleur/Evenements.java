@@ -1,5 +1,7 @@
 package net.piagoblotguinot.controleur;
 
+import net.piagoblotguinot.modèle.Filiere;
+import net.piagoblotguinot.modèle.Joueur;
 import net.piagoblotguinot.modèle.Partie;
 import net.piagoblotguinot.vue.Ecran;
 
@@ -11,6 +13,7 @@ public class Evenements
     private Controleur controleur;
     private Partie partie;
     private Ecran ecran;
+    private int choix = -1;
 
     public Evenements(Controleur controleur, Partie partie, Ecran ecran)
     {
@@ -96,20 +99,118 @@ public class Evenements
 
     public void passer()
     {
-
+        this.choix = 0;
 
 
     }
 
-    public void prendre(){}
-    public void poserCompetence(){}
-    public void poserUniteDeValeur(){}
-    public void garderEnMain(){}
+    public void prendre()
+    {
+        this.choix = 1;
+    }
+    public void poserCompetence()
+    {
+        this.choix = 2;
+    }
+    public void poserUniteDeValeur()
+    {
+        this.choix = 1;
+    }
+
     public void prendre1(){}
     public void prendre2(){}
     public void prendre3(){}
     public void prendre4(){}
-    public void diplomeDeclenche(){}
+    public void prendreFiliere()
+    {
+        choix = 1;
+    }
+    public void aImplementer(){}
+
+    public void poserOrdi()
+    {
+        this.choix = 3;
+    }
+    public void bougerOrdi()
+    {
+        this.choix = 4;
+    }
+
+    public void finDuTour()
+    {
+      this.choix = 5;
+
+    }
+
+    public boolean getChoixFiliere(Filiere filiere)
+    {
+        // Demander à la vue d'afficher un popup pour le choix de prendre la filiere ou non
+
+        choix = -1;
+        while(choix == -1){}
+
+
+        return (choix == 1);
+    }
+
+
+    public boolean getChoixJoueur()
+    {
+        // Demader à la vue d'afficher un popup
+
+        choix = -1;
+        while(choix == -1){}
+
+
+
+        return (choix == 1);
+    }
+
+    public int getChoixColonne(boolean tab[])
+    {
+        // choix = Demander a la vue d'afficher le popup en donnnant en parametre tab
+        choix = -1;
+        while(choix == -1){}
+
+
+
+        return choix;
+    }
+
+    public int getChoixAction()
+    {
+        choix = -1;
+        while(choix == -1){}
+
+
+        return choix;
+    }
+
+    public int getChoixCarte(int nombreCartesEnMain)
+    {
+        // choix = Affiche une popup qui demande juste un numéro prend en parametre nombreDeCartes
+        choix = -1;
+        while(choix == -1){}
+
+
+
+        return choix;
+    }
+
+    public void ecranFinDePartie(Joueur[] tab)
+    {
+        // Change l'etat du jeu
+        //Affiche fin de partie
+
+
+    }
+
+    public void updateView(Partie partie)
+    {
+        // UPDATE LA VUE
+
+    }
+
 
 
 

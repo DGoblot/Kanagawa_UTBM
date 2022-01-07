@@ -1,5 +1,7 @@
 package net.piagoblotguinot.modèle;
 
+import net.piagoblotguinot.controleur.Main;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -178,10 +180,10 @@ public class Partie
                     if (!aPrisCarte[i]) {
                         if (joueurs[i].choixAction(hauteur, joueursRestants(), indicePioche))//Le joueur prend des cartes
                         {
-                            System.out.println();
-                            Scanner scanner = new Scanner(System.in);
-                            System.out.println("Quelle colonne ?\n");
-                            joueurs[i].prendreCarte(scanner.nextInt() - 1, this);
+                            //System.out.println();
+                            //Scanner scanner = new Scanner(System.in);
+                            //System.out.println("Quelle colonne ?\n");
+                            joueurs[i].prendreCarte(Main.controleur.getEvenements().getChoixColonne(new boolean[4]), this);
                             aPrisCarte[i] = true;
                         }
                     }
@@ -194,15 +196,29 @@ public class Partie
 
         for(int i = 0; i < nbJoueurs; i++)
         {
-           System.out.println("Score du joueur " + (i+1) + " :");
+
+           //System.out.println("Score du joueur " + (i+1) + " :");
            score = joueurs[i].score;
-           System.out.println("Total : " + score);
-           System.out.println();
+           /*System.out.println("Total : " + score);
+           System.out.println();*/
+
+            Main.controleur.getEvenements().ecranFinDePartie(this.joueurs);
+
+
         }
 
         // Afficher un écran présentant les résultats finaux.
         //
     }
+
+    private void updateView()
+    {
+        Main.controleur.getEvenements().updateView(this);
+    }
+
+
+
+
 
     private void resetTour() {
 

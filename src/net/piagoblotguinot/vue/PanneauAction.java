@@ -7,10 +7,10 @@ import java.awt.*;
 
 public class PanneauAction extends JPanel
 {
-    private static final Point POS_BOUTONPASSER = new Point(0,0);    // HAUT GAUCHE
-    private static final Point POS_BOUTONPRENDRE = new Point(1326,0); // HAUT DROIT
-    private static final Point POS_BOUTONPRENDRECOLONNE = new Point(0,515);    // BAS GAUCHE
-    private static final Point POS_BOUTONPOSERORDI = new Point(1326,515);    // BAS DROIT
+    private static final Point POS_BOUTONPASSER = new Point(0,0);
+    private static final Point POS_BOUTONPRENDRE = new Point(1326,0);
+    private static final Point POS_BOUTONCHOIXCOLONNE = new Point(0,515);
+    private static final Point POS_BOUTONPOSERORDI = new Point(1326,515);
     private static final Point POS_BOUTONBOUGERORDI = new Point(571+69,320);
     private static final Point POS_BOUTONPOSERUV = new Point(571,0);
     private static final Point POS_BOUTONPOSERCOMPETENCE = new Point(0,0);
@@ -20,147 +20,115 @@ public class PanneauAction extends JPanel
     private Controleur controleur;
     private Point emplacement;
 
-    private JButton boutonPasser;
-    private JButton boutonPrendre;
-    private JButton[] boutonPrendreColonne;
-    private JButton boutonPoserOrdi;
-    private JButton boutonBougerOrdi;
-    private JButton boutonPoserUV;
-    private JButton boutonPoserCompetence;
-    private JButton boutonPrendreDiplome;
-    private JButton boutonFinirTour;
-/*
+    private Bouton boutonPasser;
+    private Bouton boutonPrendre;
+    private Bouton[] boutonChoixColonne;
+    private Bouton boutonPoserOrdi;
+    private Bouton boutonBougerOrdi;
+    private Bouton boutonPoserUV;
+    private Bouton boutonPoserCompetence;
+    private Bouton boutonPrendreDiplome;
+    private Bouton boutonFinirTour;
+    private JDialog choixAction;
+
     public PanneauAction(Controleur controleur,Point emplacement)
     {
         this.controleur = controleur;
         this.emplacement = emplacement;
 
-        this.boutonPasser = creerBoutonPasser;
-        this.boutonPrendre = creerBoutonPrendre;
-        this.boutonPrendreColonne = new JButton[4];
+        this.boutonPasser = creerBoutonPasser();
+        this.boutonPrendre = creerBoutonPrendre();
+        this.boutonChoixColonne = new Bouton[4];
         for(int i = 0 ; i < 4 ; i++)
         {
-            this.boutonPrendreColonne[i] = creerBoutonPrendreColonne(i);
+            this.boutonChoixColonne[i] = creerBoutonChoixColonne(i);
         }
-        this.boutonPoserOrdi = creerBoutonPoserOrdi;
-        this.boutonBougerOrdi = creerBoutonBougerOrdi;
-        this.boutonPoserUV = creerBoutonPoserUV;
-        this.boutonPoserCompetence = creerBoutonPoserCompetence;
-        this.boutonPrendreDiplome = creerBoutonPrendreDiplome;
-        this.boutonFinirTour = creerBoutonFinirTour;
-
-
-
-
+        this.boutonPoserOrdi = creerBoutonPoserOrdi();
+        this.boutonBougerOrdi = creerBoutonBougerOrdi();
+        this.boutonPoserUV = creerBoutonPoserUV();
+        this.boutonPoserCompetence = creerBoutonPoserCompetence();
+        this.boutonPrendreDiplome = creerBoutonPrendreDiplome();
+        this.boutonFinirTour = creerBoutonFinirTour();
+        this.choixAction = creerChoixAction();
 
     }
 
-    private JButton creerBoutonNouvellePartie()
+    private JDialog creerChoixAction()
     {
-        JButton button = new JButton("Nouvelle partie");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(575,120);
-        button.setBackground(Color.white);
-        button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        JDialog dialog = new JDialog();
+        //dialog.setType(JDialog.);
+
+        return dialog;
     }
 
-    private JButton creerBoutonPasser()
+    private Bouton creerBoutonPasser()
     {
-        JButton button = new JButton("Passer");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(POS_BOUTONPASSER);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Passer");
+        bouton.setLocation(POS_BOUTONPASSER);
+        bouton.addActionListener(e -> this.controleur.getEvenements().passer());
+        return bouton;
     }
-    private JButton creerBoutonPrendre()
+
+    private Bouton creerBoutonPrendre()
     {
-        JButton button = new JButton("Prendre");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation (POS_BOUTONPRENDRE);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Prendre");
+        bouton.setLocation(POS_BOUTONPRENDRE);
+        bouton.addActionListener(e -> this.controleur.getEvenements().prendre());
+        return bouton;
     }
 
-    private JButton creerBoutonPrendreColonne(int i)
+    private Bouton creerBoutonChoixColonne(int i)
     {
-        JButton button = new JButton("Prendre la colonne " + i);
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(POS_BOUTONPRENDRECOLONNE);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Choix colonne");
+        bouton.setLocation(POS_BOUTONCHOIXCOLONNE);
+        bouton.addActionListener(e -> this.controleur.getEvenements().aImplementer());
+        return bouton;
     }
 
-    private JButton creerBoutonPoserOrdi()
+    private Bouton creerBoutonPoserOrdi()
     {
-        JButton button = new JButton("Poser un ordinateur");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(POS_BOUTONPOSERORDI);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Poser ordi");
+        bouton.setLocation(POS_BOUTONPOSERORDI);
+        bouton.addActionListener(e -> this.controleur.getEvenements().poserOrdi());
+        return bouton;
     }
-    private JButton creerBoutonBougerOrdi()
+
+    private Bouton creerBoutonBougerOrdi()
     {
-        JButton button = new JButton("Bouger un ordinateur");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(POS_BOUTONBOUGERORDI);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Bouger ordi");
+        bouton.setLocation(POS_BOUTONBOUGERORDI);
+        bouton.addActionListener(e -> this.controleur.getEvenements().bougerOrdi());
+        return bouton;
     }
 
-    private JButton creerBoutonPoserUV()
+    private Bouton creerBoutonPoserUV()
     {
-        JButton button = new JButton("Poser une UV");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(POS_BOUTONPOSERUV);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Poser en tant qu'UV");
+        bouton.setLocation(POS_BOUTONPOSERUV);
+        bouton.addActionListener(e -> this.controleur.getEvenements().poserUniteDeValeur());
+        return bouton;
     }
 
-    private JButton creerBoutonPoserCompetence()
+    private Bouton creerBoutonPoserCompetence()
     {
-        JButton button = new JButton("Poser une compétence");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation();
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Poser en tant que compétence");
+        bouton.setLocation(POS_BOUTONPOSERCOMPETENCE);
+        bouton.addActionListener(e -> this.controleur.getEvenements().poserCompetence());
+        return bouton;
     }
-
-    private JButton creerBoutonPrendreDiplome()
+    private Bouton creerBoutonPrendreDiplome()
     {
-        JButton button = new JButton("Prendre un diplôme");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(575,120);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Prendre le diplome ?");
+        bouton.setLocation(POS_BOUTONPRENDREDIPLOME);
+        bouton.addActionListener(e -> this.controleur.getEvenements().prendreFiliere());
+        return bouton;
     }
-
-    private JButton creerBoutonFinirTour()
+    private Bouton creerBoutonFinirTour()
     {
-        JButton button = new JButton("Finir son tour");
-        button.setForeground(new Color(2, 2, 12));
-        button.setSize(dimensionBouton);
-        button.setLocation(575,120);
-        button.setBackground(Color.white);
-        //button.addActionListener(e -> this.controleur.getEvenements().nouvellePartie());
-        return button;
+        Bouton bouton = new Bouton("Finir le tour");
+        bouton.setLocation(POS_BOUTONFINIRTOUR);
+        bouton.addActionListener(e -> this.controleur.getEvenements().finDuTour());
+        return bouton;
     }
 
 
@@ -168,7 +136,5 @@ public class PanneauAction extends JPanel
 
 
 
-
-*/
 
 }
