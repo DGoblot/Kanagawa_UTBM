@@ -11,7 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
+/*
+        Panneau d'affichage des UV et compétences de chaques joueurs
+*/
 public class PanneauJoueur extends JPanel
 {
     private Controleur controleur;
@@ -39,7 +41,9 @@ public class PanneauJoueur extends JPanel
         this.add(this.informations);
     }
 
-
+    /*
+        Affichage des UV
+    */
     private JPanel creerUvs() // DIMENSIONS : this.LARGEUR, 332
     {
         JPanel panel = new JPanel();
@@ -62,7 +66,9 @@ public class PanneauJoueur extends JPanel
         }*/
         return panel;
     }
-
+    /*
+        Affichage des compétences
+    */
     private JPanel creerCompetences()
     {
         JPanel panel = new JPanel();
@@ -90,7 +96,9 @@ public class PanneauJoueur extends JPanel
 
         return panel;
     }
-
+    /*
+        Affichage des bonus du joueur
+    */
     private JPanel creerInformations(int n)
     {
         JPanel panel = new JPanel();
@@ -106,7 +114,9 @@ public class PanneauJoueur extends JPanel
 
         return panel;
     }
-
+    /*
+        ajout d'une compétence dans le panneau du joueur en cours
+    */
     public void ajouterCompetence(Competence competence){
         try {
             BufferedImage original = ImageIO.read(new File("data/cartes/Carte_" + competence.getIdentifiant() + ".png"));
@@ -123,7 +133,9 @@ public class PanneauJoueur extends JPanel
         }
 
     }
-
+    /*
+        ajout d'un UV dans le panneau du joueur en cour
+    */
     public void ajouterUv(Uv uv){
         try {
             BufferedImage original = ImageIO.read(new File("data/cartes/Carte_" + uv.getIdentifiant() + ".png"));
