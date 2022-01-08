@@ -1,5 +1,7 @@
 package net.piagoblotguinot.modèle;
 
+
+
 public class Uv
 {
     String annee;
@@ -9,7 +11,7 @@ public class Uv
     String approche;
     String type;
 
-    int identifiant;
+    int identifiant; //Numéro de la carte correspondante
 
     public Uv()
     {
@@ -19,17 +21,6 @@ public class Uv
         this.ects = 0;
         this.approche = "None";
         this.type = "None";
-    }
-
-    public void aff() {
-
-        System.out.println("Domaine : " + domaine);
-        System.out.println("Nombre de domaines : " + nombre);
-        System.out.println("Année : " + annee);
-        System.out.println("Approche : " + approche);
-        System.out.println("Type : " + type);
-        System.out.println("ECTS : " + ects);
-
     }
 
     public int getIdentifiant() {
