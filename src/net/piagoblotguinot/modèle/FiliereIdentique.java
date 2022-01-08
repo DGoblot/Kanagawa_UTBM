@@ -17,17 +17,10 @@ public class FiliereIdentique extends Filiere
         this.nombre = nombre;
     }
 
-    protected void aff(){
-        System.out.println("Type : " + type);
-        System.out.println("Crédits : " + ects);
-        if (stage)
-            System.out.println("Stage : oui");
-        else
-            System.out.println("Stage : non");
-        System.out.println("Objet : " + objet);
-        System.out.println("Condition : Avoir " + nombre + " " + type + " (identiques)");
-        System.out.println();
-    }
+
+
+
+    /*Teste si la filière est disponible*/   
 
     protected boolean disponible(Joueur joueur){
         boolean dispo = false;
@@ -49,6 +42,8 @@ public class FiliereIdentique extends Filiere
 
 
     }
+    
+    /*Si la filière est de type Modélisaiton, teste sa condition*/
 
     private boolean testModelisation(Joueur joueur) {
         int max,total;
@@ -69,6 +64,9 @@ public class FiliereIdentique extends Filiere
 
     }
 
+
+    /*Si la filière est de type Domaine, teste sa condition*/
+
     private boolean testDomaine(Joueur joueur) {
         int max, total;
         max = 0;
@@ -85,6 +83,9 @@ public class FiliereIdentique extends Filiere
         }
         return max >= this.nombre;
     }
+    
+    
+    /*Si la filière est de type Objet, teste sa condition*/
 
     private boolean testObjet(String type, Joueur joueur) {
         int total = 0;
