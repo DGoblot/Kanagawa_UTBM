@@ -7,7 +7,7 @@ public class Competence
     int ects;
     Ordinateur ordi;
 
-    int identifiant;
+    int identifiant; //Numéro de la carte corresepondante
 
     public Competence()
     {
@@ -16,25 +16,6 @@ public class Competence
         this.ects = 0;
         this.ordi = new Ordinateur();
     }
-
-    public void aff(boolean posee) {
-
-        System.out.println("Domaine : " + domaine);
-        System.out.println("Objet : " + objet);
-        System.out.println("ECTS : " + ects);
-        if (posee)
-        {
-            System.out.print("Ordi présent : ");
-            if(!ordi.exists){
-                System.out.println("non");
-            } else {
-                System.out.println("oui");
-                System.out.println("Ordi actif : "+ordi.actif);
-            }
-        }
-        System.out.println();
-    }
-
 
     public int getIdentifiant() {
         return identifiant;
