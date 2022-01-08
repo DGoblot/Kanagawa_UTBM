@@ -2,6 +2,8 @@ package net.piagoblotguinot.modèle;
 
 import java.util.Objects;
 
+/*Spécialisation des filières de la forme "Avoir X items identiques"*/
+
 public class FiliereIdentique extends Filiere
 {
     int nombre;
