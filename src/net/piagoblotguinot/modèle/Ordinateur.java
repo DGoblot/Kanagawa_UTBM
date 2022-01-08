@@ -1,5 +1,7 @@
 package net.piagoblotguinot.modèle;
 
+/*Gère les ordinateurs et leur état d'utilisation*/
+
 public class Ordinateur {
 
     boolean actif;
