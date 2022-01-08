@@ -2,8 +2,9 @@ package net.piagoblotguinot.modèle;
 
 public class Filiere
 {
-    int identifiant;
-    boolean[] skip;
+    int identifiant; //Numéro de la filière
+    
+    boolean[] skip; //Liste des joueurs ayant renoncé à cette filière
     String type;
     int ects;
     boolean stage;
@@ -20,11 +21,8 @@ public class Filiere
             skip[i] = false;
         }
     }
-
-    protected void aff(){
-
-    }
-
+    
+    /*Teste si le joueur peut prendre cette filière*/
     protected boolean disponible(Joueur joueur) {
         return false;
     }
