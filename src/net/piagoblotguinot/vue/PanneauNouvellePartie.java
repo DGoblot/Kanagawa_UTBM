@@ -4,7 +4,9 @@ import net.piagoblotguinot.controleur.Controleur;
 
 import javax.swing.*;
 import java.awt.*;
-
+/*
+        Classe qui gère la création d'une nouvelle partie
+*/
 public class PanneauNouvellePartie extends JPanel
 {
     private static final Point POS_LABEL_TITRE = new Point(30,10);
@@ -121,7 +123,9 @@ public class PanneauNouvellePartie extends JPanel
         }
         return label;
     }
-
+    /*
+        Permet à l'utilisateur de rentrer le nombre de joueurs et leur nom
+    */
     public JTextField creerTextFieldJoueur(int i)
     {
         JTextField textField = new JTextField(15);
@@ -209,7 +213,9 @@ public class PanneauNouvellePartie extends JPanel
         this.revalidate();
         this.getParent().repaint();
     }
-
+    /*
+        Refuse de lancer la partie si des joueurs n'ont pas de nom
+    */
     public void joueurSansNom()
     {
         JOptionPane.showMessageDialog(new JFrame(),"Certains joueurs n'ont pas de nom...");
