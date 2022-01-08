@@ -3,7 +3,9 @@ package net.piagoblotguinot.controleur;
 import net.piagoblotguinot.modèle.Carte;
 import net.piagoblotguinot.modèle.Partie;
 import net.piagoblotguinot.vue.Ecran;
-
+/*
+        Classe controleur du programme 
+*/
 public class Controleur {
     private Partie partie;
     public boolean lancer = false;
@@ -18,7 +20,9 @@ public class Controleur {
         }
 
     }
-
+    /*
+        retourne les noms des joueurs
+    */
     public String[] nomsJoueurs(){
 
         return tableauNoms;
@@ -35,7 +39,9 @@ public class Controleur {
         //partie.init();
     }
 
-
+    /*
+        Fonction principale qui lance la partie
+    */
     public void run(Partie partie){
         this.partie = partie;
         partie.run();
