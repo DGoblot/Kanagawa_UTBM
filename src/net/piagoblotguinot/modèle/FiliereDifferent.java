@@ -2,6 +2,8 @@ package net.piagoblotguinot.modèle;
 
 import java.util.Objects;
 
+/*Spécialisation de filière pour les conditions de type : "Avoir X items différents"*/
+
 public class FiliereDifferent extends Filiere
 {
     int nombre;
@@ -13,18 +15,6 @@ public class FiliereDifferent extends Filiere
         this.stage = stage;
         this.objet = objet;
         this.nombre = nombre;
-    }
-
-    protected void aff(){
-        System.out.println("Type : " + type);
-        System.out.println("Crédits : " + ects);
-        if (stage)
-            System.out.println("Stage : oui");
-        else
-            System.out.println("Stage : non");
-        System.out.println("Objet : " + objet);
-        System.out.println("Condition : Avoir " + nombre + " " + type + " différents");
-        System.out.println();
     }
 
     protected boolean disponible(Joueur joueur){
@@ -40,7 +30,8 @@ public class FiliereDifferent extends Filiere
 
 
     }
-
+    
+    /*Teste que la condition de la filière est remplie*/
     private boolean testCondition(Joueur joueur) {
         boolean nouveau;
         int total = 0;
