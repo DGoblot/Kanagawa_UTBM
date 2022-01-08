@@ -4,7 +4,9 @@ import net.piagoblotguinot.controleur.Controleur;
 
 import javax.swing.*;
 import java.awt.*;
-
+/*
+        Panneau contenant et affichant la partie en cours (plateau central, joueurs, etc)
+*/
 public class PanneauJeu extends JPanel
 {
     private static final Point POS_JOUEUR1 = new Point(0,0);    // HAUT GAUCHE
@@ -45,7 +47,7 @@ public class PanneauJeu extends JPanel
 
         for (int i = 0; i < controleur.getnbJoueurs(); i++) {
 
-
+    
         this.add(panneauJoueurs[i]);
     }
 
