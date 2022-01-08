@@ -68,36 +68,19 @@ public class Partie
         joueurs[0].grandmaitre = true;
     }
 
-    public void init() // OK
+    public void init()
     {
-        //remplir la pioche :
-        // pour chaque case de pioche[i], lire dans le fichier la ligne[i]
-        // afin de récuperer les données et les copier dans les attributs des classes, Carte, Uv et Compétence
 
-        creerCartes(); // OK
+        creerCartes(); 
 
-        melangerPioche(); // OK
+        melangerPioche(); 
 
-        creerFilieres(); // OK
+        creerFilieres(); 
 
-        affFilieres(); // OK
-
-
-
-
-        //Attribuer aléatoirement les saisons de départ aux joueurs.
-        // Attribuer aléatoirement les numéros des joueurs et l'attribut Main::assistant
-
-        //Affiche le plateau et la coniguration initiale du jeu
     }
-
-    private void affFilieres() { // OK
-        for (Filiere filiere : filieres) {
-            filiere.aff();
-        }
-    }
-
-    private void creerCartes() // OK
+    
+    /*Crée la liste de cartes à partir du fichier*/  
+    private void creerCartes()
     {
         int i = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("data/Cartes_UTGawa.txt"))) {
@@ -110,8 +93,8 @@ public class Partie
             e.printStackTrace();
         }
     }
-
-    private void creerFilieres() // OK
+    /*Crée la liste de filières à partir du fichier*/
+    private void creerFilieres()
     {
         int i = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("data/Filieres_UTGawa.txt"))) {
@@ -125,7 +108,8 @@ public class Partie
         }
     }
 
-    private Carte lireCarte(int i, String line) { // OK
+      /*Crée une carte à partir d'une chaine de caractères*/
+    private Carte lireCarte(int i, String line) {
         Carte retour = new Carte();
         String[] arr = line.split("\\s+");
 
@@ -146,7 +130,8 @@ public class Partie
         return retour;
     }
 
-    private Filiere lireFiliere(int i, String line) { // OK
+      /*Crée une filière à partir d'une chaine de caractères*/
+    private Filiere lireFiliere(int i, String line) {
         String[] arr = line.split("\\s+");
         String[] elements = new String[Integer.parseInt(arr[5])];
         Filiere retour = null;
@@ -166,6 +151,7 @@ public class Partie
         return retour;
     }
 
+    /*lance la partie*/
     public void run()
     {
 
@@ -174,23 +160,18 @@ public class Partie
             resetTour();
             int i;
 
-            System.out.println("Debut du tour");
 
 
             while (joueursRestants() > 0) {
                 this.ajouterLigne();
                 updateView();
-                affPlateau();
                 for (int j = this.premierJoueur; j < this.nbJoueurs + this.premierJoueur; j++) {
-                    i = j % nbJoueurs;
+                    i = j % nbJoueurs; //Parcours de chaque joueur à partir du premier joueur
                     if (!aPrisCarte[i]) {
                         if (joueurs[i].choixAction(hauteur, joueursRestants(), indicePioche))//Le joueur prend des cartes
                         {
-                            //System.out.println();
-                            //Scanner scanner = new Scanner(System.in);
-                            //System.out.println("Quelle colonne ?\n");
                             joueurs[i].prendreCarte(Main.controleur.getEvenements().getChoixColonne(new boolean[4]), this);
-                            //System.out.println("Colonne choisie");
+                        
                             aPrisCarte[i] = true;
                         }
                     }
@@ -218,7 +199,7 @@ public class Partie
         //
     }
 
-    protected void updateView()
+    protected void updateView() //Met à jour le plateau de jeu dans la vue
     {
         Main.controleur.getEvenements().updateView(this);
     }
@@ -226,7 +207,7 @@ public class Partie
 
 
 
-
+    /*Remet les variables à leur état de début de tour*/
     private void resetTour() {
 
         actualiserGrandMaitre();
@@ -237,7 +218,8 @@ public class Partie
 
         }
     }
-
+    
+    //Donne le pion grand maitre au joueur possédant l'assistant
     private void actualiserGrandMaitre() {
         for (int i = 0; i < nbJoueurs; i++) {
                 if (joueurs[i].assistant) {
@@ -250,6 +232,7 @@ public class Partie
 
         }
 
+    /*Compte le nombre de joueurs restants*/
 
     private int joueursRestants() {
         int n = 0;
@@ -263,28 +246,6 @@ public class Partie
         return n;
     }
 
-    private void affPlateau() {
-        for (int i = 0; i < nbJoueurs; i++) {
-            System.out.print("Colonne ");
-            System.out.println(i+1);
-            System.out.println();
-            for (int j = 0; j <= hauteur; j++) {
-                System.out.print("Ligne ");
-                System.out.println(j+1);
-                System.out.println();
-                if (plateau[j][i] == null)
-                {
-                    System.out.println("Vide");
-                } else {
-                    plateau[j][i].aff();
-                }
-                System.out.println();
-
-
-            }
-
-        }
-    }
 
     public void melangerPioche() // A refaire en plus simple
     {
@@ -310,6 +271,7 @@ public class Partie
         }
     }
 
+    /*Ajoute une ligne de cartes sur le plateau*/
     public void ajouterLigne()
     {
         if (hauteur == 0) {
@@ -331,21 +293,6 @@ public class Partie
         }
     }
 
-    public boolean peutPasserSonTour()
-    {
-        return true;
-    }
-
-    public boolean testFinManche()
-    {
-        return false;
-    }
-
-    public void changePremierJoueur()
-    {
-
-    }
-
     public boolean testFinJeu()
     {
         if (indicePioche > 71)
@@ -357,11 +304,7 @@ public class Partie
         return false;
     }
 
-    double calculScore(int numJoueur)
-    {
-        return 5000;
-    }
-
+    /*Retire le pion assistant du joueur le possedant, et le donne au joueur choisi*/
     public void donnerAssistant(int i) {
         for (int j = 0; j <nbJoueurs; j++) {
             joueurs[j].assistant = false;
