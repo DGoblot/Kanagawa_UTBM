@@ -3,6 +3,10 @@ package net.piagoblotguinot.vue;
 import javax.swing.*;
 import java.awt.*;
 
+
+/*
+    Bouton personnalisé pour le jeu
+*/
 public class Bouton extends JButton
 {
     private Dimension dimension = new Dimension(170, 30);
