@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
+/*
+        Classe gérant l'affichage du menu principal
+*/
 public class PanneauMenu extends JPanel
 {
     Controleur controleur;
@@ -107,7 +109,9 @@ public class PanneauMenu extends JPanel
         button.addActionListener(e -> this.controleur.getEvenements().quitter());
         return button;
     }
-
+    /*
+        Affichage des noms des auteurs du programme
+    */
     public void afficherCredits()
     {
         JOptionPane.showMessageDialog(new JFrame(),"Réalisé par :\nDavid GOBLOT\nUgo PIA\nJoshua GUINOT","Credits",1,null);
