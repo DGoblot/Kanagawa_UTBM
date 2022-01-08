@@ -11,17 +11,6 @@ public class Carte
         this.competence = new Competence();
     }
 
-    protected void aff()
-    {
-        System.out.println();
-        System.out.println("Compétence :");
-        this.competence.aff(false);
-        System.out.println("UV :");
-        this.uv.aff();
-
-
-    }
-
     public Uv getUv() {
         return uv;
     }
