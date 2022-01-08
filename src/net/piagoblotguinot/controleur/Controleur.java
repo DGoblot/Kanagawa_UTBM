@@ -6,23 +6,41 @@ import net.piagoblotguinot.vue.Ecran;
 
 public class Controleur {
     private Partie partie;
+    public boolean lancer = false;
     private Ecran ecran;
     private Evenements evenements;
+    String[] tableauNoms = new String[4];
+    int nbJoueurs;
 
     public Controleur() {
-        this.ecran = new Ecran(this);
-        this.evenements = new Evenements(this, this.partie, this.ecran);
-        /*
-        //Temporaire
-        String[] tableau = new String[4];
         for (int i = 0; i < 4; i++) {
-            tableau[i] = "test";
+            tableauNoms[i] = "test";
         }
-        this.partie = new Partie(4,tableau);
-        partie.init();
-        partie.run();
-        */
+
     }
+
+    public String[] nomsJoueurs(){
+
+        return tableauNoms;
+
+    }
+
+    public void init(){
+        this.ecran = new Ecran(this);
+
+
+        this.evenements = new Evenements(this, this.partie, this.ecran);
+
+        //this.partie = new Partie(nbJoueurs,tableauNoms);
+        //partie.init();
+    }
+
+
+    public void run(Partie partie){
+        this.partie = partie;
+        partie.run();
+    }
+
 
     /* GETTERS */
     public Evenements getEvenements() {
@@ -33,14 +51,21 @@ public class Controleur {
         return this.ecran;
     }
 
-    public void updatePlateau(Carte[][] plateau) {
-        //Appelle la vue en donnant en paramtre plateau
+    public int getnbJoueurs() {
+        return nbJoueurs;
+    }
+
+    public int[] getScores() {
+
+        return partie.getScores();
 
     }
 
-    public void afficherPanneauAction() {
-        // Appelle la vue pour afficher tout les boutons
-
+    public String[] getNoms() {
+        return partie.getNomsJoueurs();
     }
 
+    public void finJeu() {
+        this.evenements.ecranFinDePartie();
+    }
 }

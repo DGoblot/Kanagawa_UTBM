@@ -7,13 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
-public class PanneauDiplomes extends JPanel
+public class PanneauFilieres extends JPanel
 {
     private Controleur controleur;
     private Point emplacement;
+    private JLabel[] filieres = new JLabel[19];
 
-    public PanneauDiplomes(Controleur controleur, Point emplacement)
+    public PanneauFilieres(Controleur controleur, Point emplacement)
     {
         this.controleur = controleur;
         this.emplacement = emplacement;
@@ -36,9 +38,26 @@ public class PanneauDiplomes extends JPanel
                 ImageIcon icone = new ImageIcon(image);
                 JLabel label = new JLabel(icone);
                 this.add(label);
+                filieres[i-1] = label;
             } catch (Exception e) {
             }
         }
+    }
+
+    public void retirerFiliere(int i){
+
+            BufferedImage original = null;
+            try {
+                original = ImageIO.read(new File("data/diplomes/Filiere_vide.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageIcon carteVide = new ImageIcon(original);
+
+                filieres[i].setIcon(carteVide);
+
+
+
     }
 
 

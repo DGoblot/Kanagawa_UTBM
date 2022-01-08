@@ -7,6 +7,8 @@ public class Competence
     int ects;
     Ordinateur ordi;
 
+    int identifiant;
+
     public Competence()
     {
         this.domaine = "None";
@@ -31,5 +33,10 @@ public class Competence
             }
         }
         System.out.println();
+    }
+
+
+    public int getIdentifiant() {
+        return identifiant;
     }
 }

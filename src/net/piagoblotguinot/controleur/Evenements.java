@@ -1,12 +1,12 @@
 package net.piagoblotguinot.controleur;
 
-import net.piagoblotguinot.modèle.Filiere;
-import net.piagoblotguinot.modèle.Joueur;
-import net.piagoblotguinot.modèle.Partie;
+import net.piagoblotguinot.modèle.*;
 import net.piagoblotguinot.vue.Ecran;
+import net.piagoblotguinot.vue.PanneauJeu;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Evenements
 {
@@ -49,7 +49,13 @@ public class Evenements
 
     /* ETAT : HISTORIQUE */
 
-    public void retourMenuPrincipal() {bruitBouton();this.ecran.changerEtat(Etats.MENU);}
+    public void retourMenuPrincipal()
+    {
+        bruitBouton();
+        this.ecran.changerEtat(Etats.MENU);
+        this.ecran.setSize(780, 500);
+        this.ecran.setLocationRelativeTo(null);
+    }
 
     /* ETAT : NOUVELLE_PARTIE */
 
@@ -69,14 +75,14 @@ public class Evenements
     {
         bruitBouton();
         int nbJoueurs = this.ecran.getPanneauNouvellePartie().getNbJoueurs();
-        String[] nomsJoueurs = new String[4];
+        controleur.nbJoueurs = nbJoueurs;
         boolean valide = true;
 
         /* Tester si les joueurs ont donné des noms valides (pas de chaines vides ou blanches) */
         for(int i = 0; i < nbJoueurs; i++)
         {
-            nomsJoueurs[i] = this.ecran.getPanneauNouvellePartie().getTextFieldJoueur(i);
-            if(nomsJoueurs[i] == null || nomsJoueurs[i].isEmpty() || nomsJoueurs[i].trim().isEmpty())
+            controleur.tableauNoms[i] = this.ecran.getPanneauNouvellePartie().getTextFieldJoueur(i);
+            if(controleur.tableauNoms[i] == null || controleur.tableauNoms[i].isEmpty() || controleur.tableauNoms[i].trim().isEmpty())
             {
                 valide = false;
             }
@@ -84,8 +90,11 @@ public class Evenements
         if(valide) /* Lancer une nouvelle partie */
         {
             this.partie = null;
-            this.partie = new Partie(nbJoueurs, nomsJoueurs);
+            this.partie = new Partie(nbJoueurs, controleur.tableauNoms);
+            this.partie.init();
+            this.ecran.setPanneauJeu(new PanneauJeu(this.controleur));
             this.ecran.changerEtat(Etats.PARTIE_EN_COURS);
+            this.controleur.run(this.partie);
         }
         else /* Demander aux joueurs de donner des pseudos corrects */
         {
@@ -110,9 +119,10 @@ public class Evenements
     }
     public void poserCompetence()
     {
+        System.out.println("Ici2");
         this.choix = 2;
     }
-    public void poserUniteDeValeur()
+    public void poserUV()
     {
         this.choix = 1;
     }
@@ -146,8 +156,7 @@ public class Evenements
     {
         // Demander à la vue d'afficher un popup pour le choix de prendre la filiere ou non
 
-        choix = -1;
-        while(choix == -1){}
+        choix = this.ecran.getPanneauJeu().getPanneauAction().prendreFiliere(filiere);
 
 
         return (choix == 1);
@@ -156,58 +165,100 @@ public class Evenements
 
     public boolean getChoixJoueur()
     {
-        // Demader à la vue d'afficher un popup
 
-        choix = -1;
-        while(choix == -1){}
+        switch (this.ecran.getPanneauJeu().getPanneauAction().choisirPasser()){
+            case "Passer" -> choix = 0;
+            case "Prendre des cartes" -> choix = 1;
+        }
 
-
-
-        return (choix == 1);
+        return choix == 1;
     }
 
     public int getChoixColonne(boolean tab[])
     {
         // choix = Demander a la vue d'afficher le popup en donnnant en parametre tab
         choix = -1;
-        while(choix == -1){}
+        while(choix == -1)
+        {
+            choix = this.ecran.getPanneauJeu().getPanneauAction().choisirColonne();
+        }
 
 
 
-        return choix;
+        return choix-1;
     }
 
     public int getChoixAction()
     {
+        // choix = Demander a la vue d'afficher le popup en donnnant en parametre tab
         choix = -1;
-        while(choix == -1){}
+        while(choix == -1)
+        {
+            choix = this.ecran.getPanneauJeu().getPanneauAction().choisirAction();
+        }
+
 
 
         return choix;
     }
+
+    /*
+    public int getChoixAction()
+    {
+        System.out.println("choix action");
+        choix = -1;
+
+        while(choix == -1){
+            System.out.print("");
+        }
+
+        return choix;
+    }*/
 
     public int getChoixCarte(int nombreCartesEnMain)
     {
         // choix = Affiche une popup qui demande juste un numéro prend en parametre nombreDeCartes
         choix = -1;
-        while(choix == -1){}
+        while(choix == -1){
+            choix = this.ecran.getPanneauJeu().getPanneauAction().choisirCarte();
+        }
 
 
 
         return choix;
     }
 
-    public void ecranFinDePartie(Joueur[] tab)
+    public void ecranFinDePartie()
     {
-        // Change l'etat du jeu
-        //Affiche fin de partie
-
+        this.ecran.changerEtat(Etats.FIN_JEU);
 
     }
 
     public void updateView(Partie partie)
     {
-        // UPDATE LA VUE
+        updatePlateau(partie.getPlateau());
+
+    }
+
+    public void afficherMain(ArrayList<Carte> main){
+        this.ecran.getPanneauJeu().getPanneauAction().ajouterCartesPrises(main);
+    }
+
+    private void updatePlateau(Carte[][] plateau) {
+        this.ecran.getPanneauJeu().getPanneauUvs().afficherPlateau(plateau);
+    }
+
+    public void ajouterUV(int i, Uv uv) {
+        this.ecran.getPanneauJeu().getPanneauJoueur(i).ajouterUv(uv);
+
+    }
+    public void ajouterCompetence(int i, Competence competence) {
+        this.ecran.getPanneauJeu().getPanneauJoueur(i).ajouterCompetence(competence);
+
+    }
+
+    public void retirerFiliere(int i){
+        this.ecran.getPanneauJeu().getPanneauFilieres().retirerFiliere(i-1);
 
     }
 

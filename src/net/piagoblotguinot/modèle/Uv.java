@@ -9,6 +9,8 @@ public class Uv
     String approche;
     String type;
 
+    int identifiant;
+
     public Uv()
     {
         this.annee = "None";
@@ -28,5 +30,9 @@ public class Uv
         System.out.println("Type : " + type);
         System.out.println("ECTS : " + ects);
 
+    }
+
+    public int getIdentifiant() {
+        return identifiant;
     }
 }

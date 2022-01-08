@@ -2,6 +2,7 @@ package net.piagoblotguinot.modèle;
 
 public class Filiere
 {
+    int identifiant;
     boolean[] skip;
     String type;
     int ects;
@@ -26,5 +27,9 @@ public class Filiere
 
     protected boolean disponible(Joueur joueur) {
         return false;
+    }
+
+    public int getIdentifiant(){
+        return identifiant;
     }
 }

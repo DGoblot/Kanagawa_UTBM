@@ -3,11 +3,14 @@ package net.piagoblotguinot.vue;
 import net.piagoblotguinot.controleur.Controleur;
 import net.piagoblotguinot.controleur.Etats;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Ecran extends JFrame
 {
@@ -17,6 +20,7 @@ public class Ecran extends JFrame
     private PanneauNouvellePartie panneauNouvellePartie;
     private PanneauHistorique panneauHistorique;
     private PanneauJeu panneauJeu;
+    private PanneauFin panneauFin;
 
     public Ecran(Controleur controleur)
     {
@@ -25,29 +29,33 @@ public class Ecran extends JFrame
         this.panneauMenu = new PanneauMenu(controleur);
         this.panneauNouvellePartie = new PanneauNouvellePartie(controleur);
         this.panneauHistorique = new PanneauHistorique(controleur);
-        this.panneauJeu = new PanneauJeu(controleur);
+        //this.panneauJeu = new PanneauJeu(controleur);*
 
         initialiser();
     }
 
-    private void initialiser()
-    {
+    private void initialiser() {
         this.setTitle("UTGawa");
+        try
+        {
+            BufferedImage original = ImageIO.read(new File("data/Icone.png"));
+            ImageIcon icone = new ImageIcon(original);
+            this.setIconImage(original);
+        }
+        catch (Exception e){}
+
         //this.setSize(780,500);
-        this.setSize(1910,1070);
+        this.setSize(1910, 1070);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
-        try
-        {
+        try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Problème avec le LookAndFeel");
             e.printStackTrace();
-        };
+        }
         /*
         this.addWindowListener(new WindowAdapter()
         {
@@ -62,7 +70,7 @@ public class Ecran extends JFrame
             }
         });*/
 
-        this.setContentPane(this.panneauJeu);
+        this.setContentPane(this.panneauMenu);
         this.setVisible(true);
     }
 
@@ -84,7 +92,10 @@ public class Ecran extends JFrame
                         break;
                     }
 
-            case FIN_JEU-> {break;}
+            case FIN_JEU-> {
+                this.panneauFin = new PanneauFin(this.controleur);
+                this.setContentPane(this.panneauFin);
+            }
         }
     }
 
@@ -93,4 +104,6 @@ public class Ecran extends JFrame
     public PanneauNouvellePartie getPanneauNouvellePartie() {return panneauNouvellePartie;}
     public PanneauHistorique getPanneauHistorique() {return panneauHistorique;}
     public PanneauJeu getPanneauJeu() {return panneauJeu;}
+
+    public void setPanneauJeu(PanneauJeu panneauJeu) {this.panneauJeu = panneauJeu;}
 }

@@ -21,4 +21,12 @@ public class Carte
 
 
     }
+
+    public Uv getUv() {
+        return uv;
+    }
+
+    public Competence getCompetence() {
+        return competence;
+    }
 }

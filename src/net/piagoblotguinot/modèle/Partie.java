@@ -27,6 +27,7 @@ public class Partie
     private int premierJoueur;
     private int assistant;
     private boolean[] aPrisCarte;
+    private int[] scores;
 
     public Partie(int nbJoueurs, String[] nomsJoueurs)
     {
@@ -102,7 +103,7 @@ public class Partie
         try (BufferedReader br = new BufferedReader(new FileReader("data/Cartes_UTGawa.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                this.cartes[i] = lireCarte(line);
+                this.cartes[i] = lireCarte(i,line);
                 i++;
             }
         } catch (IOException e) {
@@ -116,7 +117,7 @@ public class Partie
         try (BufferedReader br = new BufferedReader(new FileReader("data/Filieres_UTGawa.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                this.filieres.add(lireFiliere(line));
+                this.filieres.add(lireFiliere(i+1,line));
                 i++;
             }
         } catch (IOException e) {
@@ -124,9 +125,12 @@ public class Partie
         }
     }
 
-    private Carte lireCarte(String line) { // OK
+    private Carte lireCarte(int i, String line) { // OK
         Carte retour = new Carte();
         String[] arr = line.split("\\s+");
+
+        retour.competence.identifiant = i+1;
+        retour.uv.identifiant = i+1;
 
         retour.competence.domaine = arr[0];
         retour.competence.objet = arr[1];
@@ -142,7 +146,7 @@ public class Partie
         return retour;
     }
 
-    private Filiere lireFiliere(String line) { // OK
+    private Filiere lireFiliere(int i, String line) { // OK
         String[] arr = line.split("\\s+");
         String[] elements = new String[Integer.parseInt(arr[5])];
         Filiere retour = null;
@@ -157,12 +161,13 @@ public class Partie
             }
         }
 
+        retour.identifiant = i;
+
         return retour;
     }
 
     public void run()
     {
-        int score;
 
         while(this.running) // Boucle des tours de jeu.
         {
@@ -174,6 +179,7 @@ public class Partie
 
             while (joueursRestants() > 0) {
                 this.ajouterLigne();
+                updateView();
                 affPlateau();
                 for (int j = this.premierJoueur; j < this.nbJoueurs + this.premierJoueur; j++) {
                     i = j % nbJoueurs;
@@ -184,6 +190,7 @@ public class Partie
                             //Scanner scanner = new Scanner(System.in);
                             //System.out.println("Quelle colonne ?\n");
                             joueurs[i].prendreCarte(Main.controleur.getEvenements().getChoixColonne(new boolean[4]), this);
+                            //System.out.println("Colonne choisie");
                             aPrisCarte[i] = true;
                         }
                     }
@@ -198,11 +205,11 @@ public class Partie
         {
 
            //System.out.println("Score du joueur " + (i+1) + " :");
-           score = joueurs[i].score;
+           scores[i] = joueurs[i].score;
            /*System.out.println("Total : " + score);
            System.out.println();*/
 
-            Main.controleur.getEvenements().ecranFinDePartie(this.joueurs);
+            Main.controleur.getEvenements().ecranFinDePartie();
 
 
         }
@@ -211,7 +218,7 @@ public class Partie
         //
     }
 
-    private void updateView()
+    protected void updateView()
     {
         Main.controleur.getEvenements().updateView(this);
     }
@@ -360,5 +367,65 @@ public class Partie
             joueurs[j].assistant = false;
         }
         joueurs[i].assistant = true;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public Carte[][] getPlateau() {
+        return plateau;
+    }
+
+    public Carte[] getPioche() {
+        return pioche;
+    }
+
+    public Carte[] getCartes() {
+        return cartes;
+    }
+
+    public boolean[][] getMasque() {
+        return masque;
+    }
+
+    public int getHauteur() {
+        return hauteur;
+    }
+
+    public int getIndicePioche() {
+        return indicePioche;
+    }
+
+    public ArrayList<Filiere> getFilieres() {
+        return filieres;
+    }
+
+    public Joueur[] getJoueurs() {
+        return joueurs;
+    }
+
+    public String[] getNomsJoueurs() {
+        return nomsJoueurs;
+    }
+
+    public int getNbJoueurs() {
+        return nbJoueurs;
+    }
+
+    public int getPremierJoueur() {
+        return premierJoueur;
+    }
+
+    public int getAssistant() {
+        return assistant;
+    }
+
+    public boolean[] getaPrisCarte() {
+        return aPrisCarte;
+    }
+
+    public int[] getScores(){
+        return scores;
     }
 }

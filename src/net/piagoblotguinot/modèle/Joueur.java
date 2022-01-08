@@ -1,6 +1,5 @@
 package net.piagoblotguinot.modèle;
 
-import net.piagoblotguinot.controleur.Controleur;
 import net.piagoblotguinot.controleur.Main;
 
 import java.util.*;
@@ -52,7 +51,7 @@ public class Joueur
 
         Scanner scanner = new Scanner(System.in);
 
-        //System.out.println("Tour du joueur " + numeroAbsolu);
+        System.out.println("Tour du joueur " + numeroAbsolu);
 
         if (hauteur < 2 && joueursRestants > 1 && indicePioche < 72) {
             System.out.println("Prendre des cartes ?\n");
@@ -72,14 +71,16 @@ public class Joueur
             main.add(partie.plateau[i][colonne]);
             partie.plateau[i][colonne] = null;
         }
-        Main.controleur.updatePlateau(partie.plateau);
+
+        partie.updateView();
+
+        Main.controleur.getEvenements().afficherMain(this.main);
         tour(partie);
 
     }
 
     private void tour(Partie partie) {
 
-        Scanner scanner = new Scanner(System.in);
         boolean fini = false;
         int n;
 
@@ -90,18 +91,9 @@ public class Joueur
 
         while (!fini && main.size() != 0)
         {
-            Main.controleur.afficherPanneauAction(); // Nom temporaire
+            affJoueur();
 
-            //affJoueur();
-            //System.out.println();
-            /*
-            System.out.println("Choix action :");
-            System.out.println("1: Placer UV");
-            System.out.println("2: Placer compétence");
-            System.out.println("3: Placer ordinateur");
-            System.out.println("4: Deplacer ordinateur");
-            System.out.println("5: Finir tour");*/
-            //switch (scanner.nextInt()) {
+
             switch (Main.controleur.getEvenements().getChoixAction())
             {
                 case 1: /* Placer comme uV */
@@ -141,9 +133,13 @@ public class Joueur
                 default:
                     //System.out.println("Choix invalide");
             }
+
+            partie.updateView();
+            Main.controleur.getEvenements().afficherMain(this.main);
         }
 
         //System.out.println("Fin du tour");
+
 
 
 
@@ -181,6 +177,9 @@ public class Joueur
         }
 
 
+        Main.controleur.getEvenements().ajouterCompetence(this.numeroAbsolu-1, main.get(indice-1).competence);
+
+
         main.remove(indice-1);
         
         testFiliere(partie);
@@ -190,6 +189,7 @@ public class Joueur
     }
 
     private boolean placerUv(int indice, Partie partie) {
+        indice--;
         int domainesDispo = 0;
         int domainesRequis = main.get(indice).uv.nombre;
 
@@ -221,8 +221,10 @@ public class Joueur
         }
 
         uvs.add(main.get(indice).uv);
+        Main.controleur.getEvenements().ajouterUV(this.numeroAbsolu-1, main.get(indice).uv);
+
         main.remove(indice);
-        
+
         testFiliere(partie);
 
         return true;
@@ -254,9 +256,13 @@ public class Joueur
         }
         for (Filiere filiere : prises) {
             partie.filieres.remove(filiere);
+            Main.controleur.getEvenements().retirerFiliere(filiere.getIdentifiant());
         }
         if (filierePrise)
             testFiliere(partie);
+
+
+
     }
 
     private void prendreFiliere(Filiere filiere) {

@@ -2,8 +2,11 @@ package net.piagoblotguinot.vue;
 
 import net.piagoblotguinot.controleur.Controleur;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class PanneauMenu extends JPanel
 {
@@ -30,7 +33,7 @@ public class PanneauMenu extends JPanel
 
     private void initialiser()
     {
-        this.setBackground(new Color(45, 45, 45));
+        this.setBackground(new Color(255, 255, 255));
         this.setLayout(null);
         this.add(this.titreJeu);
         this.add(this.boutonNouvellePartie);
@@ -41,11 +44,23 @@ public class PanneauMenu extends JPanel
 
     private JLabel creerTitreJeu()
     {
-        JLabel label = new JLabel("UTGawa");
+        JLabel label = new JLabel();
         label.setFont(new Font("Source Code Pro", Font.BOLD, 48));
-        label.setSize(new Dimension(300,300));
-        label.setLocation(100,40);
+        label.setSize(new Dimension(600,400));
+        label.setLocation(100,0);
         label.setForeground(Color.white);
+
+        try
+        {
+            BufferedImage original = ImageIO.read(new File("data/Logo.png"));
+            Image image = original.getScaledInstance((1024/3),(734/3),Image.SCALE_SMOOTH);
+            ImageIcon icone = new ImageIcon(image);
+
+            label.setIcon(icone);
+        }
+        catch (Exception e){}
+
+
         return label;
     }
 
