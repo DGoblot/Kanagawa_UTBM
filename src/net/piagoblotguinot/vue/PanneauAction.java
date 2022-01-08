@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*
+    Panneau délimitant la zone d'interraction entre le joueur et le programme (boutons)
+*/
 public class PanneauAction extends JPanel
 {
     private static final Point POS_BOUTON_POSER_ORDI = new Point(30+180+180,150);
@@ -76,6 +79,9 @@ public class PanneauAction extends JPanel
         return bouton;
     }
 
+    /*
+        Déclenché quand le joueur peut prendre une filière. Affiche une boîte de dialogue proposant la filière en question.
+    */  
     public int prendreFiliere(Filiere filiere)
     {
         int choix = 0;
@@ -101,9 +107,15 @@ public class PanneauAction extends JPanel
         label.setForeground(Color.white);
         return label;
     }
-
+    
+    /*
+        Change le nom du joueur affiché comme actif
+    */
     public void changerNomJoueurActif(String nom){this.labelInfo.setText(nom+" doit placer ses cartes.");}
 
+    /*
+        Crée le panneau des cartes prises en main par le joueur actif
+    */
     public JPanel creerPanneauCartesPrises()
     {
         JPanel panel = new JPanel();
@@ -113,6 +125,9 @@ public class PanneauAction extends JPanel
         return panel;
     }
 
+    /*
+        Vide la main du joueur : remplace toutes les cartes par des cartes vides
+    */
     private void viderMain(){
         BufferedImage original = null;
         try {
@@ -128,6 +143,9 @@ public class PanneauAction extends JPanel
         }
     }
 
+    /*
+        Initialise la main du joueur
+    */
     private void initMain(){
         for(int i = 1; i < 5;i++)
         {
@@ -147,6 +165,9 @@ public class PanneauAction extends JPanel
 
     }
 
+    /*
+        Ajoute dans le panneau des cartes prises les cartes prises par le joueur
+    */
     public void ajouterCartesPrises(ArrayList<Carte> main)
     {
         viderMain();
@@ -164,6 +185,9 @@ public class PanneauAction extends JPanel
         }
     }
 
+    /*
+        Permet au joueur de choisir quelle colonne il veut prendre
+    */
     public int choisirColonne()
     {
         String[] domaine = { "1", "2", "3", "4"};
@@ -172,7 +196,11 @@ public class PanneauAction extends JPanel
                 domaine[0]);
 
         return Integer.parseInt(choix);
-    }
+    
+    
+    /*
+        Permet au joueur de choisir quelle action il souhaite effectuer
+    */
     public int choisirAction()
     {
         String[] domaine = { "Poser UV", "Poser compétence", "Poser ordi", "Bouger ordi","Fin du tour"};
@@ -204,8 +232,9 @@ public class PanneauAction extends JPanel
 
     }
 
-
-
+    /*
+        Permet au joueur de choisir la carte sur laquelle il va appliquer un ordi
+    */
     public int choisirCarte()
     {
         String[] domaine = { "1", "2", "3", "4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"};
@@ -256,6 +285,9 @@ public class PanneauAction extends JPanel
         return bouton;
     }
 
+    /*
+        Permet au joueur de choisir si il passe son tour ou prend des cartes
+    */
     public String choisirPasser() {
         String[] domaine = { "Passer", "Prendre des cartes"};
         String choix = (String) JOptionPane.showInputDialog(null, "Quelle action ?", "Veuillez choisir", JOptionPane.QUESTION_MESSAGE, null,
