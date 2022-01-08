@@ -8,7 +8,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+/*
+        Classe du panneau d'affichage des filières disponibles
+*/
 public class PanneauFilieres extends JPanel
 {
     private Controleur controleur;
@@ -43,7 +45,9 @@ public class PanneauFilieres extends JPanel
             }
         }
     }
-
+    /*
+        Permet de retirer une filière du panneau
+    */
     public void retirerFiliere(int i){
 
             BufferedImage original = null;
