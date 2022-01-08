@@ -2,6 +2,7 @@ package net.piagoblotguinot.modèle;
 
 import java.util.Objects;
 
+/*Spécialisation de filière pour les filières de la forme "Avoir X, X, et X"*/
 public class FiliereEnum extends Filiere
 {
     String[] liste;
@@ -14,22 +15,6 @@ public class FiliereEnum extends Filiere
         this.objet = objet;
         this.liste = liste;
 
-    }
-
-    protected void aff(){
-        System.out.println("Type : " + type);
-        System.out.println("Crédits : " + ects);
-        if (stage)
-            System.out.println("Stage : oui");
-        else
-            System.out.println("Stage : non");
-        System.out.println("Objet : " + objet);
-        System.out.print("Condition : Avoir les langages suivants :");
-        for (String s : liste) {
-            System.out.print(" " + s);
-        }
-        System.out.println();
-        System.out.println();
     }
 
     protected boolean disponible(Joueur joueur){
@@ -45,7 +30,8 @@ public class FiliereEnum extends Filiere
 
 
     }
-
+    
+    /*Teste si la condition de la filière est remplie*/
     private boolean testCondition(Joueur joueur) {
         int n = liste.length;
         boolean present;
