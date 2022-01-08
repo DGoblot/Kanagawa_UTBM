@@ -12,6 +12,9 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/*
+    Fenêtre du jeu
+*/
 public class Ecran extends JFrame
 {
     private Controleur controleur;
@@ -56,24 +59,14 @@ public class Ecran extends JFrame
             System.out.println("Problème avec le LookAndFeel");
             e.printStackTrace();
         }
-        /*
-        this.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                int choix = JOptionPane.showConfirmDialog(Ecran.this,"Quitter le jeu ?", "Veuillez confirmer", JOptionPane.YES_NO_OPTION);
-                    if(choix == JOptionPane.YES_OPTION)
-                    {
-                        System.exit(0);
-                    }
-            }
-        });*/
 
         this.setContentPane(this.panneauMenu);
         this.setVisible(true);
     }
 
+    /*
+        Change l'état du jeu : change le panneau affiché dans la fenêtre
+    */
     public void changerEtat(Etats nouvelEtat)
     {
         this.etatCourant = nouvelEtat;
