@@ -4,7 +4,9 @@ import net.piagoblotguinot.controleur.Controleur;
 
 import javax.swing.*;
 import java.awt.*;
-
+/*
+        Classe du panneau fin (affichage des scores)
+*/
 public class PanneauFin extends JPanel
 {
     Controleur controleur;
@@ -47,7 +49,9 @@ public class PanneauFin extends JPanel
         this.add(boutonRetour);
         this.add(this.resultats);
     }
-
+    /*
+        Créer le label des résultats
+    */
     private JLabel creerLabelTitre()
     {
         JLabel label = new JLabel("Resultats");
@@ -56,7 +60,9 @@ public class PanneauFin extends JPanel
         label.setLocation(30,10);
         return label;
     }
-
+    /*
+        Créer le bouton permettant de quitter le jeu
+    */
     private Bouton creerBoutonRetour()
     {
         Bouton bouton = new Bouton("Retour");
