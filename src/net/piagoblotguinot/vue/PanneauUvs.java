@@ -10,7 +10,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+/*
+        Classe gérant le plateau central
+*/
 public class PanneauUvs extends JPanel {
     private Controleur controleur;
     private JLabel[] images = new JLabel[12];
@@ -58,7 +60,9 @@ public class PanneauUvs extends JPanel {
 
 
     }
-
+    /*
+        Vide le plateau central de toutes ses cartes (reset)
+    */
     private void viderPlateau() {
 
         BufferedImage original = null;
@@ -75,7 +79,9 @@ public class PanneauUvs extends JPanel {
         }
 
     }
-
+    /*
+        Affiche les cartes présentes sur le plateau central
+    */
     public void afficherPlateau(Carte[][] plateau) {
 
         viderPlateau();
