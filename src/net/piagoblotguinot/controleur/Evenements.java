@@ -7,7 +7,9 @@ import net.piagoblotguinot.vue.PanneauJeu;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.util.ArrayList;
-
+/*
+        Classe des evenement du jeu (intéraction utilisateurs)
+*/
 public class Evenements
 {
     private Controleur controleur;
@@ -28,7 +30,9 @@ public class Evenements
     public void historique() {bruitBouton(); this.ecran.changerEtat(Etats.HISTORIQUE);}
     public void credits() {bruitBouton(); this.ecran.getPanneauMenu().afficherCredits();}
     public void quitter() {bruitBouton(); System.exit(0);}
-
+    /*
+        joue un bruit lorsqu'un bouton du menu est enfoncé
+    */
     public void bruitBouton()
     {
         File file = new File("data/bouton.wav");
@@ -70,7 +74,9 @@ public class Evenements
         bruitBouton();
         this.ecran.getPanneauNouvellePartie().supprimerJoueur();
     }
-
+    /*
+        Lance une nouvelle partie avec les paramètres fournis par le joueur
+    */
     public void valider()
     {
         bruitBouton();
@@ -105,7 +111,9 @@ public class Evenements
     /* ETAT : PARTIE_EN_COURS */
 
 
-
+    /*
+        Différentes fonction qui retourne le choix du joueur
+    */
     public void passer()
     {
         this.choix = 0;
@@ -119,7 +127,6 @@ public class Evenements
     }
     public void poserCompetence()
     {
-        System.out.println("Ici2");
         this.choix = 2;
     }
     public void poserUV()
@@ -127,15 +134,10 @@ public class Evenements
         this.choix = 1;
     }
 
-    public void prendre1(){}
-    public void prendre2(){}
-    public void prendre3(){}
-    public void prendre4(){}
     public void prendreFiliere()
     {
         choix = 1;
     }
-    public void aImplementer(){}
 
     public void poserOrdi()
     {
@@ -162,7 +164,9 @@ public class Evenements
         return (choix == 1);
     }
 
-
+    /*
+        retourne le choix du joueur pour son tour
+    */
     public boolean getChoixJoueur()
     {
 
@@ -173,7 +177,9 @@ public class Evenements
 
         return choix == 1;
     }
-
+    /*
+        retourne le numéro de la colonne choisi par le joueur
+    */
     public int getChoixColonne(boolean tab[])
     {
         // choix = Demander a la vue d'afficher le popup en donnnant en parametre tab
@@ -187,7 +193,9 @@ public class Evenements
 
         return choix-1;
     }
-
+    /*
+        retourne le choix du joueur après qu'il ait pris des cartes
+    */
     public int getChoixAction()
     {
         // choix = Demander a la vue d'afficher le popup en donnnant en parametre tab
@@ -201,20 +209,9 @@ public class Evenements
 
         return choix;
     }
-
     /*
-    public int getChoixAction()
-    {
-        System.out.println("choix action");
-        choix = -1;
-
-        while(choix == -1){
-            System.out.print("");
-        }
-
-        return choix;
-    }*/
-
+        retourne la carte à poser choisi par le joueur
+    */
     public int getChoixCarte(int nombreCartesEnMain)
     {
         // choix = Affiche une popup qui demande juste un numéro prend en parametre nombreDeCartes
@@ -227,13 +224,13 @@ public class Evenements
 
         return choix;
     }
-
+    
     public void ecranFinDePartie()
     {
         this.ecran.changerEtat(Etats.FIN_JEU);
 
     }
-
+    
     public void updateView(Partie partie)
     {
         updatePlateau(partie.getPlateau());
