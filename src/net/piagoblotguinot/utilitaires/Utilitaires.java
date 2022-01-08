@@ -2,7 +2,9 @@ package net.piagoblotguinot.utilitaires;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+/*
+        Transforme une image en BufferdImage, essentiel dans le programme
+*/
 public class Utilitaires
 {
     public static BufferedImage toBufferedImage(Image img)
