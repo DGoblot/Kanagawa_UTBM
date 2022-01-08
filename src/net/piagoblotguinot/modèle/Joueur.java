@@ -7,13 +7,11 @@ import java.util.*;
 public class Joueur
 {
     int score;
-    int numeroAbsolu;
-    int numeroCourant;
+    int numeroAbsolu; //Numéro du joueur
     ArrayList<Carte> main;
     ArrayList<Uv> uvs;
     ArrayList<Competence> competences;
     ArrayList<Filiere> filieres;
-    int[] filieresRefusees;
     int mains;
     int mouvements;
     int stages;
@@ -44,24 +42,21 @@ public class Joueur
         competences.add(new Competence());
 
     }
-
+    
+    /*choix de passer son tour ou prendre des cartes*/
+    
     public boolean choixAction(int hauteur, int joueursRestants, int indicePioche)
     {
 
 
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Tour du joueur " + numeroAbsolu);
-
-        if (hauteur < 2 && joueursRestants > 1 && indicePioche < 72) {
-            System.out.println("Prendre des cartes ?\n");
+        if (hauteur < 2 && joueursRestants > 1 && indicePioche < 72) { //Si le joueur a le droit de passer son tour
             return Main.controleur.getEvenements().getChoixJoueur();
         } else {
-            System.out.println("Prise de carte obligatoire");
             return true;
         }
     }
 
+    /*prendre les cartes de la colonne choisie*/
     public void prendreCarte(int colonne, Partie partie)
     {
         for (int i = 0; i <= partie.hauteur; i++) {
@@ -78,46 +73,41 @@ public class Joueur
         tour(partie);
 
     }
-
+    
+    /*Boucle du choix des actions une fois les cartes prises*/
+    
     private void tour(Partie partie) {
 
         boolean fini = false;
         int n;
 
-        System.out.println("Tour du joueur " + numeroAbsolu);
 
         resetInventaire();
 
 
         while (!fini && main.size() != 0)
         {
-            affJoueur();
 
 
             switch (Main.controleur.getEvenements().getChoixAction())
             {
                 case 1: /* Placer comme uV */
-                    //System.out.println("Choix de la carte :");
                     if (!placerUv(Main.controleur.getEvenements().getChoixCarte(this.main.size()),partie)){
                         System.out.println("Choix invalide");
                     }
                     break;
                 case 2: /* Placer comme compétence */
-                    //System.out.println("Choix de la carte :");
                     if (!placerCompetence(Main.controleur.getEvenements().getChoixCarte(this.main.size()),partie)){
                         System.out.println("Choix invalide");
                     }
                     break;
                 case 3: /* Poser ordi */
-                    System.out.println("Choix de la carte :");
                     if (!placerOrdi(Main.controleur.getEvenements().getChoixCarte(this.competences.size()))){
                         System.out.println("Choix invalide");
                     }
                     break;
                 case 4: /* Bouger ordi */
-                    System.out.println("Choix de la case de depart :");
                     n = Main.controleur.getEvenements().getChoixCarte(this.competences.size());
-                    System.out.println("Choix de la case d'arrivée :");
                     if(!bougerOrdinateur(n-1,Main.controleur.getEvenements().getChoixCarte(this.competences.size())-1))
                     {
                         System.out.println("Choix invalide");
@@ -127,18 +117,16 @@ public class Joueur
                     if (main.size() <= mains){
                         fini = true;
                     } else {
-                        //System.out.println("Main trop grande");
+                        System.out.println("Main trop grande");
                     }
                     break;
                 default:
-                    //System.out.println("Choix invalide");
+                    System.out.println("Choix invalide");
             }
 
             partie.updateView();
             Main.controleur.getEvenements().afficherMain(this.main);
         }
-
-        //System.out.println("Fin du tour");
 
 
 
@@ -299,69 +287,6 @@ public class Joueur
         return n;
     }
 
-    private void affJoueur() {
-
-        System.out.println("Liste des filières :");
-        affFilieres();
-        System.out.println("Liste des UV :");
-        affUv();
-        System.out.println("Liste des compétences :");
-        affCompetences();
-        System.out.println("Main du joueur :");
-        affMain();
-        System.out.println("Inventaire : ");
-        affInventaire();
-
-
-
-
-    }
-
-    private void affFilieres() {
-        System.out.println();
-        filieres.forEach(Filiere::aff);
-        System.out.println();
-    }
-
-    private void affInventaire() {
-        System.out.println("Ordinateurs restants : " + ordinateurs);
-        System.out.println("Nombre de mains : " + mains);
-        System.out.println("Mouvements restants : " + mouvements);
-        System.out.println("Prof TP : " + assistant);
-        System.out.println();
-    }
-
-    private void affCompetences() {
-
-        System.out.println();
-        competences.forEach(comp -> comp.aff(true));
-        System.out.println();
-    }
-
-    private void affUv() {
-
-
-        System.out.println();
-        System.out.println("Annee initiale : " + anneeInitiale);
-        System.out.println();
-        uvs.forEach(Uv::aff);
-        System.out.println();
-
-    }
-
-    private void affMain() {
-
-        System.out.println();
-        main.forEach(Carte::aff);
-        System.out.println();
-
-    }
-
-    public boolean conditionRemplie()
-    {
-        return false;
-    }
-
     public boolean bougerOrdinateur(int depart, int arrivee)
     {
         if (!competences.get(depart).ordi.exists || competences.get(arrivee).ordi.exists || mouvements == 0)
@@ -377,16 +302,6 @@ public class Joueur
         System.out.println("Etat ordi arrivee : "+competences.get(arrivee).ordi.exists);
 
         return true;
-
-    }
-
-    public boolean diplomeDisponnible()
-    {
-        return true;
-    }
-
-    public void poserStage()
-    {
 
     }
 
@@ -450,6 +365,7 @@ public class Joueur
         return score;
         }
 
+    //Calcule la plus longue suite d'années dans les UV
     private int suiteAnnees() {
 
         int[] taille = new int[4];
