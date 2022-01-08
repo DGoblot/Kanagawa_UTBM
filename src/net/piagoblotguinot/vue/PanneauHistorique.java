@@ -4,7 +4,9 @@ import net.piagoblotguinot.controleur.Controleur;
 
 import javax.swing.*;
 import java.awt.*;
-
+/*
+     Classe gérant le panneau d'affichage des parties (pas utilisée)
+*/
 public class PanneauHistorique extends JPanel
 {
     Controleur controleur;
