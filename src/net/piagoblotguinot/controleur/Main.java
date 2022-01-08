@@ -10,7 +10,6 @@ public class Main
     {
         controleur = new Controleur();
         controleur.init();
-        //controleur.run();
     }
 
 }
